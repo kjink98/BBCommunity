@@ -1,19 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Hello from './views/hello';
 
 function App() {
-  const [hello, setHello] = useState('')
-
-  useEffect(() => {
-    axios.get('/api/hello')
-      .then(response => setHello(response.data))
-      .catch(error => console.log(error))
-  }, []);
-
   return (
-    <div className="App">
-      백엔드 데이터 : {hello}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/hello" element={<Hello />}></Route>
+      </Routes>
+    </Router>
   );
 }
 
