@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>BB커뮤니티</title>
+</head>
+
+<body>
+	<h1>BB커뮤니티</h1>
+
+	<div>
+		<ul>
+			<li><a th:href="@{/user/login}">로그인</a></li>
+			<li><a th:href="@{/user/register}">회원가입</a></li>
+		</ul>
+	</div>
+	<hr>
+	<div>
+		<ul>
+			<li><a th:href="@{/}">전체게시판</a></li>
+			<li><a th:href="@{/}">자유게시판</a></li>
+			<li><a th:href="@{/}">공지사항</a></li>
+		</ul>
+	</div>
+
+</body>
+
+</html>

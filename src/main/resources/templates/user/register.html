@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<h1>회원가입</h1>
+	<form th:object="${user}" th:action="@{/user/registser}" method="post">
+        <label for="email">이메일:</label><br>
+        <input type="email" id="email" th:field="*{email}" required><br>
+        <label for="password">비밀번호:</label><br>
+        <input type="password" id="password" th:field="*{password}" required><br>
+        <label for="name">이름:</label><br>
+        <input type="text" id="name" th:field="*{name}" required><br>
+        <label for="gender">성별:</label><br>
+        <select id="gender" th:field="*{gender}" required>
+            <option value="">성별 선택</option>
+            <option value="남">남</option>
+            <option value="녀">녀</option>
+        </select><br>
+        <label for="nickname">별명:</label><br>
+        <input type="text" id="nickname" th:field="*{nickname}" required><br>
+        <label for="role">역할:</label><br>
+        <select id="role" th:field="*{role}">
+            <option value="">역할 선택</option>
+            <option value="ROLE_USER">사용자</option>
+            <option value="ROLE_ADMIN">관리자</option>
+        </select><br>
+        <input type="submit" value="회원가입">
+    </form>
+</body>
+
+</html>
