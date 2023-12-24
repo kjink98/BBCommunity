@@ -13,28 +13,28 @@ import com.bbcommunity.service.RegisterUserService;
 
 @RestController
 @RequestMapping("/user")
-public class AuthorizationController {
+public class AuthorizationControllerClose {
 	private final RegisterUserService registerUserService;
 	
-	public AuthorizationController(RegisterUserService registerUserService) {
+	public AuthorizationControllerClose(RegisterUserService registerUserService) {
         this.registerUserService = registerUserService;
     }
 	
-	@PostMapping("/regisger")
+	@PostMapping("/register")
     public ResponseEntity<?> register(@ModelAttribute User user) {
 //    	if (!user.getPassword().equals(user.getPasswordCheck())) {
 //            return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
 //        }
         try {
-            registerUserService.register(
-                user.getEmail(),
-                user.getPassword(),
-                user.getName(),	
-                user.getNickname(),
-                user.getGender(),
-                user.getRole(),
-                user.getRegdate()
-            );
+        	registerUserService.register(
+        			user.getEmail(),
+        			user.getPassword(),
+        			user.getName(),
+        			user.getGender(),
+        			user.getNickname(),
+        			user.getRole(),
+        			user.getRegdate()
+        			);
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

@@ -1,4 +1,4 @@
-package com.bbcommunity.domain;
+package com.bbcommunity.role;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
