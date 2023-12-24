@@ -3,6 +3,7 @@ package com.bbcommunity.domain;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.DynamicInsert;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.bbcommunity.role.Role;
 
@@ -67,9 +68,10 @@ public class User {
 	}
 
 	// 수정 메소드
-	public User update(String name, String nickname) {
+	public User update(String name, String nickname, String password, PasswordEncoder passwordEncoder) {
 		this.name = name;
 		this.nickname = nickname;
+		this.password = passwordEncoder.encode(password);
 		return this;
 	}
 
@@ -80,8 +82,9 @@ public class User {
 
 	// 회원 생성
 	public static User createUser(String email, String password, String name, String gender, String nickname, Role role,
-			LocalDateTime regdate) {
-		return User.builder().email(email).name(name).password(password) // 암호화한 pw를 pw로 사용
+			LocalDateTime regdate, PasswordEncoder passwordEncoder) {
+		
+		return User.builder().email(email).name(name).password(passwordEncoder.encode(password)) // 암호화한 pw를 pw로 사용
 				.role(Role.USER) // 회원가입은 무조건 USER 계정만 만들어짐. 관리자는 따로 권한 부여해야함.
 				.gender(gender).nickname(nickname).regdate(regdate).build();
 	}

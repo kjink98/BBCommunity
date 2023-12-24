@@ -8,33 +8,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bbcommunity.domain.User;
+import com.bbcommunity.dto.UserRegisterDto;
 import com.bbcommunity.service.RegisterUserService;
-
 
 @RestController
 @RequestMapping("/user")
-public class AuthorizationControllerClose {
+public class AuthorizationController {
 	private final RegisterUserService registerUserService;
-	
-	public AuthorizationControllerClose(RegisterUserService registerUserService) {
-        this.registerUserService = registerUserService;
-    }
-	
+
+	public AuthorizationController(RegisterUserService registerUserService) {
+		this.registerUserService = registerUserService;
+	}
+
 	@PostMapping("/register")
-    public ResponseEntity<?> register(@ModelAttribute User user) {
-//    	if (!user.getPassword().equals(user.getPasswordCheck())) {
-//            return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
-//        }
+    public ResponseEntity<?> register(@ModelAttribute UserRegisterDto userRegisterDto) {
         try {
-        	registerUserService.register(
-        			user.getEmail(),
-        			user.getPassword(),
-        			user.getName(),
-        			user.getGender(),
-        			user.getNickname(),
-        			user.getRole(),
-        			user.getRegdate()
-        			);
+				User user = registerUserService.register(
+		            userRegisterDto.getEmail(),
+		            userRegisterDto.getPassword(),
+		            userRegisterDto.getPasswordCheck(),
+		            userRegisterDto.getName(),
+		            userRegisterDto.getGender(),
+		            userRegisterDto.getNickname()
+			        );
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

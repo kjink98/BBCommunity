@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.bbcommunity.domain.User;
+import com.bbcommunity.dto.UserRegisterDto;
 
 @Controller
 @RequestMapping("/user")
@@ -13,7 +13,7 @@ public class UserViewController {
 	
 	@GetMapping("/register")
 	public String register(Model model) {
-		model.addAttribute("user", new User());
+		model.addAttribute("user", new UserRegisterDto());
 		return "user/register";
 	}
 	
