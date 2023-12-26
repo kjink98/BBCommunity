@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>전체게시판</h1>
+	<ul>
+        <li th:each="post : ${allPosts}">
+            <a th:href="@{/post/{id}(id=${post.id})}" th:text="${post.title}"></a>
+        </li>
+    </ul>
+</body>
+</html>

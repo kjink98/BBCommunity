@@ -2,7 +2,7 @@ package com.bbcommunity.dto;
 
 import java.io.Serializable;
 
-import com.bbcommunity.domain.User;
+import com.bbcommunity.entity.User;
 
 import lombok.Getter;
 

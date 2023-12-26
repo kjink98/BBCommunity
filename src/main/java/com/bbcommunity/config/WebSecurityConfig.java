@@ -35,7 +35,7 @@ public class WebSecurityConfig {
 						.loginPage("/user/login") // 사용자 정의 로그인 페이지 URL을 지정
 						.loginProcessingUrl("/login-process") // 로그인 폼 데이터를 처리할 URL을 지정
 						.usernameParameter("email") // 로그인 폼에서 사용자 ID를 받을 파라미터의 이름을 지정
-						.passwordParameter("passsword") // 로그인 폼에서 비밀번호를 받을 파라미터의 이름을 지정
+						.passwordParameter("password") // 로그인 폼에서 비밀번호를 받을 파라미터의 이름을 지정
 						.defaultSuccessUrl("/", true)  // 로그인 성공 후 리다이렉트할 URL을 지정
 						.failureForwardUrl("/user/loginView") // 로그인 실패 시 포워드할 URL을 지정
 						.permitAll()) // 로그인 과정에서의 모든 요청을 허용

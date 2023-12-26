@@ -1,6 +1,7 @@
-package com.bbcommunity.domain;
+package com.bbcommunity.entity;
 
 import java.time.LocalDateTime;
+
 
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.security.crypto.password.PasswordEncoder;

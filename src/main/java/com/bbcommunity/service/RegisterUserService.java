@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.bbcommunity.domain.User;
+import com.bbcommunity.entity.User;
 import com.bbcommunity.repository.UserRepository;
 import com.bbcommunity.role.Role;
 

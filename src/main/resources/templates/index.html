@@ -11,16 +11,19 @@
 
 	<div>
 		<ul>
-			<li><a th:href="@{/user/login}">로그인</a></li>
+			<li><a th:href="@{/user/login}" th:if="${#authentication.principal == 'anonymousUser'}">로그인</a></li>
+			<form th:if="${#authentication.principal != 'anonymousUser'}" th:action="@{/logout}" method="post">
+				<input type="submit" value="로그아웃" />
+			</form>
 			<li><a th:href="@{/user/register}">회원가입</a></li>
 		</ul>
 	</div>
 	<hr>
 	<div>
 		<ul>
-			<li><a th:href="@{/}">전체게시판</a></li>
-			<li><a th:href="@{/}">자유게시판</a></li>
-			<li><a th:href="@{/}">공지사항</a></li>
+			<li><a th:href="@{/post/all}">전체게시판</a></li>
+			<li><a th:href="@{/post/free}">자유게시판</a></li>
+			<li><a th:href="@{/post/notice}">공지사항</a></li>
 		</ul>
 	</div>
 

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>공지사항</h1>
+	 <ul>
+        <li th:each="notice : ${notices}">
+            <a th:href="@{/notice/{id}(id=${notice.id})}" th:text="${notice.title}"></a>
+        </li>
+    </ul>
+</body>
+</html>

@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bbcommunity.domain.User;
 import com.bbcommunity.dto.UserRegisterDto;
+import com.bbcommunity.entity.User;
 import com.bbcommunity.service.RegisterUserService;
 
 @RestController
