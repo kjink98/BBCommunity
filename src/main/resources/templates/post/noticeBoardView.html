@@ -11,5 +11,7 @@
             <a th:href="@{/post/{id}(id=${post.postId})}" th:text="${post.title}"></a>
         </li>
     </ul>
+    
+    <a th:href="@{/post/write}" class="btn btn-primary">글쓰기</a>
 </body>
 </html>

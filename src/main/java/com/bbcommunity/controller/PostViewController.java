@@ -49,7 +49,7 @@ public class PostViewController {
 	public String noticeBoard(Model model) {
 		Board board = boardService.getBoardById((long) 2);
 		List<Posts> posts = postService.findByBoardBoardId(board.getBoardId());
-		model.addAttribute("board", board);
+		model.addAttribute("posts", posts);
 
 		return "post/noticeBoardView";
 	}
