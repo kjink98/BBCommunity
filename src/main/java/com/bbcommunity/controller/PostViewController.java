@@ -32,7 +32,6 @@ public class PostViewController {
 	@GetMapping("/all")
 	public String allPosts(Model model) {
 		List<Posts> posts = postService.findAll();
-		System.out.println("postservice.findaAll"+postService.findAll());
 		model.addAttribute("posts", posts);
 		return "post/allPostsView";
 	}
@@ -64,12 +63,9 @@ public class PostViewController {
 	@PostMapping("/write")
 	public String savePost(@ModelAttribute PostForm postForm) {
 		User user = userService.getCurrentLoggedInMember();
-		System.out.println("contrller user : "+user);
 		if (user != null) {
 	        postForm.setUser(user);
-	        System.out.println("postForm before save: "+ postForm.getUser());
 	        postService.save(postForm);
-	        System.out.println("postForm after save: "+ postForm.getUser());
 	    } else {
 	        System.out.println("로그인 되지 않음");
 	    }

@@ -6,6 +6,15 @@
 </head>
 <body>
 	<h1>공지사항</h1>
+	<hr>
+	<div>
+		<ul>
+			<li><a th:href="@{/}">메인</a></li>
+			<li><a th:href="@{/post/all}">전체게시판</a></li>
+			<li><a th:href="@{/post/free}">자유게시판</a></li>
+		</ul>
+	</div>
+	<hr>
 	 <ul>
         <li th:each="post : ${posts}">
             <a th:href="@{/post/{id}(id=${post.postId})}" th:text="${post.title}"></a>

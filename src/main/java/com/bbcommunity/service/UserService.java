@@ -32,7 +32,6 @@ public class UserService {
 		try {
 			// Principal에서 사용자의 이름(email)을 가져옴
 			String userEmail = extractUserEmail(authentication.getPrincipal());
-			System.out.println("UserSerivce.userEmail: "+userEmail);
 			// 이메일을 사용하여 Member 엔티티를 찾음
 			return userRepository.findByEmail(userEmail).orElse(null);
 		} catch (RuntimeException e) {
