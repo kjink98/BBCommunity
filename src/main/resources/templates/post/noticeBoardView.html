@@ -7,8 +7,8 @@
 <body>
 	<h1>공지사항</h1>
 	 <ul>
-        <li th:each="notice : ${notices}">
-            <a th:href="@{/notice/{id}(id=${notice.id})}" th:text="${notice.title}"></a>
+        <li th:each="post : ${posts}">
+            <a th:href="@{/post/{id}(id=${post.postId})}" th:text="${post.title}"></a>
         </li>
     </ul>
 </body>

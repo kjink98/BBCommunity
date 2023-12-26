@@ -2,6 +2,8 @@ package com.bbcommunity.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -13,9 +15,10 @@ import lombok.Setter;
 @Setter
 public class Board {
 	@Id
-    @Column(name = "BOARD_ID")
-    private int boardId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "BOARD_ID")
+	private Long boardId;	
 
-    @Column(name = "BOARD_NAME", nullable = false)
-    private String boardName;	
+	@Column(name = "BOARD_NAME", nullable = false)
+	private String boardName;
 }

@@ -13,8 +13,10 @@ import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "POST")
@@ -22,15 +24,15 @@ public class Posts {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "POST_ID")
-    private int postId;
+    private Long postId;
 	
 	@ManyToOne
 	@JoinColumn(name = "BOARD_ID")
-    private Board boardId;
+    private Board board;
 	
 	@ManyToOne
 	@JoinColumn(name = "USER_ID")
-    private User userId;
+    private User user;
 
     @Column(name = "POST_TITLE")
     private String title;
@@ -45,12 +47,13 @@ public class Posts {
     private int postViews;
     
     @Builder
-    public Posts(String title, String content, User userId, Board boardId){
+    public Posts(String title, String content, User user, Board board){
         this.title = title;
         this.content = content;
-        this.userId = userId;
-        this.boardId = boardId;
+        this.user = user;
+        this.board = board;
     }
+    
     
     /**
      * 게시글 정보 업데이트

@@ -13,7 +13,7 @@ public class BoardService {
 		this.boardRepository = boardRepository;	
 	}
 
-	public Board getBoardByName(String boardName) {
-		return boardRepository.findByBoardName(boardName);
+	public Board getBoardById(Long boardId) {
+		return boardRepository.findByBoardId(boardId);
 	}
 }
