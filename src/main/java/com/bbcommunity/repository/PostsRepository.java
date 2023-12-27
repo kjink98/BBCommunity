@@ -1,6 +1,6 @@
 package com.bbcommunity.repository;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,9 +13,9 @@ import com.bbcommunity.entity.Posts;
  */
 public interface PostsRepository extends JpaRepository<Posts, Long> {
     
-	List<Posts> findByBoardBoardId(Long boardId);
+	Page<Posts> findByBoardBoardId(Long boardId, Pageable pageable);
 	
-	
+	Optional<Posts> findByPostId(Long id);
 	/**
      * 모든 글을 내림차순으로 조회하는 쿼리입니다.
      */
@@ -25,6 +25,9 @@ public interface PostsRepository extends JpaRepository<Posts, Long> {
      * 제목에 특정 단어를 포함하는 글을 대소문자 구분 없이 조회하는 쿼리입니다.
      */
 	Page<Posts> findByTitleIgnoreCaseContaining(String title, Pageable pageable);
+
+	
+	
 	
 	
 	
