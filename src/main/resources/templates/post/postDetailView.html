@@ -22,8 +22,10 @@
 	</div>
 
 
+	<form th:action="@{/post/edit/{id}(id=${post.postId})}" method="get">
+        <button type="submit">수정하기</button>
+    </form>
 	<button onclick="goBack()">뒤로 가기</button>
-
 
 	<script>
 		function goBack() {

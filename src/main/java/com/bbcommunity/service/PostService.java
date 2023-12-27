@@ -49,14 +49,20 @@ public class PostService {
 	@Transactional
 	public Long save(PostForm postForm) {
 		try {
+			// postForm에서 필요한 정보 추출
 			Long boardId = postForm.getBoardId();
 			User user = userService.getCurrentLoggedInMember();
 
+			// 해당 정보를 이용하여 새로운 Posts 객체 생성
 			Board board = boardRepository.findById(boardId)
 					.orElseThrow(() -> new IllegalArgumentException("Invalid boardId:" + boardId));
 
-			Posts post = Posts.builder().title(postForm.getTitle()).content(postForm.getContent()).user(user)
-					.board(board).build();
+			Posts post = Posts.builder()
+					.title(postForm.getTitle())
+					.content(postForm.getContent())
+					.user(user)
+					.board(board)
+					.build();
 
 			return postsRepository.save(post).getPostId();
 		} catch (Exception e) {
@@ -64,5 +70,19 @@ public class PostService {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	@Transactional
+	public Optional<Posts> update(Long id, PostForm postForm) {
+	    Optional<Posts> existingPostOptional = postsRepository.findById(id);
+	    if (existingPostOptional.isPresent()) {
+	        Posts existingPost = existingPostOptional.get();
+	        existingPost.setTitle(postForm.getTitle());
+	        existingPost.setContent(postForm.getContent());
+
+	        return Optional.of(postsRepository.save(existingPost)); // 게시글 업데이트 후 Optional로 감싸서 반환
+	    } else {
+	        return Optional.empty(); // 존재하지 않는 게시물이면 Optional.empty() 반환
+	    }
 	}
 }
