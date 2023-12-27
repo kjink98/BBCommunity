@@ -85,4 +85,14 @@ public class PostService {
 	        return Optional.empty(); // 존재하지 않는 게시물이면 Optional.empty() 반환
 	    }
 	}
+	
+	public boolean deletePostById(Long postId) {
+        Optional<Posts> postOptional = postsRepository.findById(postId);
+        if (postOptional.isPresent()) {
+            // 삭제하려는 게시물이 존재하면 삭제 수행
+            postsRepository.delete(postOptional.get());
+            return true; // 삭제 성공
+        }
+        return false; // 삭제할 게시물이 없음
+    }
 }

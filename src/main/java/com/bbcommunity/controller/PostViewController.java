@@ -132,4 +132,19 @@ public class PostViewController {
 			return "error/editErrorView";
 		}
 	}
+	
+	@PostMapping("/delete/{id}")
+    public String deletePost(@PathVariable Long id) {
+		User loggedInUser = userService.getCurrentLoggedInMember();
+		Optional<Posts> post = postService.findByPostId(id);
+		
+        boolean isDeleted = postService.deletePostById(id);
+        if (isDeleted && loggedInUser != null && post.get().getUser().equals(loggedInUser)) {
+            // 게시물 삭제에 성공하면 전체 게시물 목록으로 리다이렉트
+            return "redirect:/post/all";
+        } else {
+            // 삭제할 게시물이 없는 경우 에러 페이지 또는 다른 처리
+            return "error/deleteErrorView";
+        }
+    }
 }

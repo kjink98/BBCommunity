@@ -25,6 +25,10 @@
 	<form th:action="@{/post/edit/{id}(id=${post.postId})}" method="get">
         <button type="submit">수정하기</button>
     </form>
+    <form th:action="@{/post/delete/{id}(id=${post.postId})}" method="post">
+        <button type="submit">삭제하기</button>
+    </form>
+
 	<button onclick="goBack()">뒤로 가기</button>
 
 	<script>
