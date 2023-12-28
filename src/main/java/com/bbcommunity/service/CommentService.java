@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bbcommunity.entity.Comment;
 import com.bbcommunity.entity.Posts;
@@ -55,19 +56,9 @@ public class CommentService {
 	}
 
 	// 댓글 삭제 메서드
-	public void deleteComment(Long commentId) {
-		commentRepository.deleteByCommentId(commentId);
+	@Transactional
+	public void deleteComment(Long commentId, Long postId) {
+		commentRepository.deleteByCommentId(commentId, postId);
 	}
 
-	public void updateComment(Long commentId, String updatedContent) {
-		Optional<Comment> optionalComment = commentRepository.findById(commentId);
-
-		if (optionalComment.isPresent()) {
-			Comment comment = optionalComment.get();
-			comment.setCommentContent(updatedContent);
-			commentRepository.save(comment);
-		} else {
-			// 처리할 로직 추가 (예: 존재하지 않는 댓글에 대한 예외처리)
-		}
-	}
 }
