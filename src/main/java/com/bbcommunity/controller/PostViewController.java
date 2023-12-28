@@ -1,6 +1,6 @@
 package com.bbcommunity.controller;
 
-import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bbcommunity.dto.PostForm;
 import com.bbcommunity.entity.Board;
+import com.bbcommunity.entity.Comment;
 import com.bbcommunity.entity.Posts;
 import com.bbcommunity.entity.User;
 import com.bbcommunity.service.BoardService;
+import com.bbcommunity.service.CommentService;
 import com.bbcommunity.service.PostService;
 import com.bbcommunity.service.UserService;
 
@@ -34,6 +36,13 @@ public class PostViewController {
 	private BoardService boardService;
 	@Autowired
 	private UserService userService;
+
+	private final CommentService commentService; // commentService 필드 추가
+
+	@Autowired
+	public PostViewController(CommentService commentService) {
+		this.commentService = commentService;
+	}
 
 	@GetMapping("/all")
 	public String allPosts(Model model, @RequestParam(defaultValue = "0") int page) {
@@ -96,6 +105,14 @@ public class PostViewController {
 		if (post.isPresent()) {
 			// 게시글이 존재하면 해당 게시글 정보를 모델에 추가하여 상세 페이지에 전달
 			model.addAttribute("post", post.get());
+
+			// 해당 게시글의 댓글 목록을 가져와 모델에 추가
+			List<Comment> comments = commentService.getCommentsByPost(post.get());
+			model.addAttribute("comments", comments);
+			
+			// 새 댓글을 생성하기 위한 빈 Comment 객체도 모델에 추가
+			model.addAttribute("newComment", new Comment());
+
 			return "post/postDetailView";
 		} else {
 			// 게시글이 존재하지 않으면 예외 처리 또는 적절한 조치
@@ -132,19 +149,19 @@ public class PostViewController {
 			return "error/editErrorView";
 		}
 	}
-	
+
 	@PostMapping("/delete/{id}")
-    public String deletePost(@PathVariable Long id) {
+	public String deletePost(@PathVariable Long id) {
 		User loggedInUser = userService.getCurrentLoggedInMember();
 		Optional<Posts> post = postService.findByPostId(id);
-		
-        boolean isDeleted = postService.deletePostById(id);
-        if (isDeleted && loggedInUser != null && post.get().getUser().equals(loggedInUser)) {
-            // 게시물 삭제에 성공하면 전체 게시물 목록으로 리다이렉트
-            return "redirect:/post/all";
-        } else {
-            // 삭제할 게시물이 없는 경우 에러 페이지 또는 다른 처리
-            return "error/deleteErrorView";
-        }
-    }
+
+		boolean isDeleted = postService.deletePostById(id);
+		if (isDeleted && loggedInUser != null && post.get().getUser().equals(loggedInUser)) {
+			// 게시물 삭제에 성공하면 전체 게시물 목록으로 리다이렉트
+			return "redirect:/post/all";
+		} else {
+			// 삭제할 게시물이 없는 경우 에러 페이지 또는 다른 처리
+			return "error/deleteErrorView";
+		}
+	}
 }

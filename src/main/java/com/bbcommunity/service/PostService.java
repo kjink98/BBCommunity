@@ -1,6 +1,5 @@
 package com.bbcommunity.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -48,29 +47,24 @@ public class PostService {
 
 	@Transactional
 	public Long save(PostForm postForm) {
-		try {
-			// postForm에서 필요한 정보 추출
-			Long boardId = postForm.getBoardId();
-			User user = userService.getCurrentLoggedInMember();
+	    // postForm에서 필요한 정보 추출
+	    Long boardId = postForm.getBoardId();
+	    User user = userService.getCurrentLoggedInMember();
 
-			// 해당 정보를 이용하여 새로운 Posts 객체 생성
-			Board board = boardRepository.findById(boardId)
-					.orElseThrow(() -> new IllegalArgumentException("Invalid boardId:" + boardId));
+	    // 해당 정보를 이용하여 새로운 Posts 객체 생성
+	    Board board = boardRepository.findById(boardId)
+	            .orElseThrow(() -> new IllegalArgumentException("Invalid boardId:" + boardId));
 
-			Posts post = Posts.builder()
-					.title(postForm.getTitle())
-					.content(postForm.getContent())
-					.user(user)
-					.board(board)
-					.build();
+	    Posts post = Posts.builder()
+	            .title(postForm.getTitle())
+	            .content(postForm.getContent())
+	            .user(user)
+	            .board(board)
+	            .build();
 
-			return postsRepository.save(post).getPostId();
-		} catch (Exception e) {
-			System.out.println("An error occurred in the save method");
-			e.printStackTrace();
-			return null;
-		}
+	    return postsRepository.save(post).getPostId();
 	}
+
 	
 	@Transactional
 	public Optional<Posts> update(Long id, PostForm postForm) {

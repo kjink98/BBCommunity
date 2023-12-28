@@ -1,5 +1,7 @@
 package com.bbcommunity.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +21,10 @@ public class UserService {
 		this.userRepository = repository;
 		this.passwordEncoder = passwordEncoder;
 	}
+	
+	public Optional<User> findByUserId(Long userId) {
+        return userRepository.findById(userId);
+    }
 	
 	public User getCurrentLoggedInMember() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
