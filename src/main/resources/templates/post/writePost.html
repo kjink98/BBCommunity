@@ -2,30 +2,41 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>글쓰기</title>
+    <!-- Bootstrap CSS 추가 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- 사용자 정의 CSS 파일 링크 -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
 <body>
-	<div class="container">
-		<h1>글쓰기</h1>
-		<form th:action="@{/post/write}" method="post">
-			<label for="boardType">게시판 종류</label>
-			<select class="form-control" id="boardId" name="boardId">
-				<option value="1">자유게시판</option>
-				<option value="2">공지사항</option>
-			</select>
-			<div class="form-group">
-				<label for="title">제목</label>
-				<input type="text" class="form-control" id="title" name="title" required>
-			</div>
-			<div class="form-group">
-				<label for="content">내용</label>
-				<textarea class="form-control" id="content" name="content" rows="3" required></textarea>
-			</div>
-			<button type="submit" class="btn btn-primary">저장하기</button>
-		</form>
-	</div>
+    <div class="container mt-5">
+        <h1 class="mb-4">글쓰기</h1>
+        <form th:action="@{/post/write}" method="post">
+            <div class="form-group">
+                <label for="boardType">게시판 종류</label>
+                <select class="form-control" id="boardId" name="boardId">
+                    <option value="1">자유게시판</option>
+                    <option value="2">공지사항</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="title">제목</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="content">내용</label>
+                <textarea class="form-control" id="content" name="content" rows="10" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">저장하기</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS 추가 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

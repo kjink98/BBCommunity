@@ -1,0 +1,41 @@
+/* style.css */
+body {
+    background-color: #fff7e6; /* 야구장 모래 색상 */
+    font-family: 'Helvetica', sans-serif;
+}
+
+.navbar {
+    background-color: #1c783b; /* 야구장 잔디 색상 */
+}
+
+.navbar .navbar-brand, .navbar-nav .nav-link {
+    color: #fff; /* 글자 색상 */
+}
+
+.table thead th {
+    background-color: #ffcc5c; /* 야구공 색상 */
+}
+
+.btn-primary {
+    background-color: #ff5733; /* 야구 유니폼 색상 */
+    border-color: #ff5733;
+}
+
+.btn-primary:hover {
+    background-color: #c4451c;
+    border-color: #c4451c;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #ffcc5c; /* 야구공 색상 */
+    border-color: #ffcc5c;
+}
+
+.pagination .page-link {
+    color: #1c783b; /* 야구장 잔디 색상 */
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #ccc; /* 비활성화 링크 색상 */
+}
+

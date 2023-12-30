@@ -1,0 +1,20 @@
+<!-- header.html -->
+<nav class="navbar navbar-expand-lg" th:fragment="header">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">BB커뮤니티</a>
+        <div class="navbar-nav ml-auto">
+            <!-- 로그인 전 -->
+            <a class="nav-item nav-link" th:href="@{/user/login}"
+               th:if="${#authentication.principal == 'anonymousUser'}">로그인</a>
+            <a class="nav-item nav-link" th:href="@{/user/register}"
+               th:if="${#authentication.principal == 'anonymousUser'}">회원가입</a>
+            
+            <!-- 로그인 후 -->
+            <a class="nav-item nav-link" th:href="@{/user/myInfo}"
+               th:if="${#authentication.principal != 'anonymousUser'}">내 정보</a>
+            <form th:if="${#authentication.principal != 'anonymousUser'}" th:action="@{/logout}" method="post">
+                <input type="submit" value="로그아웃" class="btn btn-danger" />
+            </form>
+        </div>
+    </div>
+</nav>

@@ -2,32 +2,46 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8">
-	<title>게시글 수정</title>
+    <meta charset="UTF-8">
+    <title>게시글 수정</title>
+    <!-- Bootstrap CSS 추가 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- 사용자 정의 CSS 파일 링크 -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
 <body>
-	<h1>게시글 수정</h1>
+    <!-- 헤더 부분 삽입 -->
+    <header th:replace="layout/header.html :: header"></header>
 
-	<form th:action="@{/post/edit/{id}(id=${post.postId})}" method="post">
-		<div>
-			<label for="title">제목:</label>
-			<input type="text" id="title" name="title" th:value="${post.title}" required>
-		</div>
-		<div>
-			<label for="content">내용:</label>
-			<textarea id="content" name="content" required th:text="${post.content}"></textarea>
-		</div>
-		<button type="submit">수정 완료</button>
-	</form>
+    <div class="container mt-5">
+        <h1 class="mb-4">게시글 수정</h1>
 
-	<button onclick="goBack()">뒤로 가기</button>
+        <form th:action="@{/post/edit/{id}(id=${post.postId})}" method="post">
+            <div class="form-group">
+                <label for="title">제목:</label>
+                <input type="text" class="form-control" id="title" name="title" th:value="${post.title}" required>
+            </div>
+            <div class="form-group">
+                <label for="content">내용:</label>
+                <textarea class="form-control" id="content" name="content" required th:text="${post.content}"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">수정 완료</button>
+        </form>
 
-	<script>
-		function goBack() {
-			window.history.back(); // 브라우저 뒤로 가기 기능
-		}
-	</script>
+        <button type="button" class="btn btn-secondary" onclick="goBack()">뒤로 가기</button>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back(); // 브라우저 뒤로 가기 기능
+        }
+    </script>
+    
+    <!-- Bootstrap JS 추가 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

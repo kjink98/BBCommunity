@@ -1,15 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <!-- Bootstrap CSS 추가 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- 사용자 정의 CSS 파일 링크 -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
-	<form method="post" action="/login-process">
-		<input type="email" name="email" placeholder="ID">
-		<input type="password" name="password" placeholder="Password">
-		
-		<input type="submit" value="로그인">
-	</form>
+    <div class="container mt-5">
+        <div class="mb-3">
+            <h2>로그인</h2>
+        </div>
+        <form method="post" action="/login-process">
+            <div class="form-group">
+                <label for="email">ID</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="ID" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+            </div>
+            <div class="form-group d-flex align-items-center">
+                <button type="submit" class="btn btn-primary mr-2">로그인</button>
+                <a th:href="@{/user/register}" class="btn btn-outline-primary">회원가입</a>
+            </div>
+        </form>
+        <a href="/" class="btn btn-link">메인으로</a>
+    </div>
+
+    <!-- Bootstrap JS 추가 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -116,7 +116,7 @@ public class PostViewController {
 			return "post/postDetailView";
 		} else {
 			// 게시글이 존재하지 않으면 예외 처리 또는 적절한 조치
-			return "errorPage"; // 예시로 에러 페이지를 보여줌
+			return "error/deleteErrorView"; // 예시로 에러 페이지를 보여줌
 		}
 	}
 

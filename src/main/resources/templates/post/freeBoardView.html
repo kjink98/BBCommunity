@@ -2,71 +2,72 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>자유게시판</title>
+    <!-- Bootstrap CSS 추가 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- 사용자 정의 CSS 파일 링크 -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
 <body>
-	<h1>자유게시판</h1>
-	<hr>
-	<div>
-		<ul>
-			<li><a th:href="@{/}">메인</a></li>
-			<li><a th:href="@{/post/all}">전체게시판</a></li>
-			<li><a th:href="@{/post/notice}">공지사항</a></li>
-		</ul>
-	</div>
-	<hr>
-	<div th:if="${postsPage}">
-		<table border="1">
-			<thead>
-				<tr>
-					<th>글번호</th>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>등록일</th>
-					<th>조회수</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="post : ${posts}">
-					<td>
-						<a th:href="@{/post/detail/{id}(id=${post.postId})}" th:text="${post.postId}"></a>
-					</td>
-					<td>
-						<a th:href="@{/post/detail/{id}(id=${post.postId})}" th:text="${post.title}"></a>
-					</td>
-					<td th:text="${post.user.name}"></td>
-					<td th:text="${#temporals.format(post.postRegdate, 'yyyy-MM-dd')}"></td>
-					<td th:text="${post.postViews}"></td>
-				</tr>
-			</tbody>
-		</table>
+    <!-- 헤더 부분 삽입 -->
+    <div th:replace="layout/header :: header"></div>
 
-		<!-- 페이지 링크 생성 -->
-		<div th:if="${postsPage.totalPages > 1}">
-			<ul class="pagination">
-				<li th:class="${postsPage.first ? 'disabled' : ''}">
-					<a th:href="@{/post/all(page=0)}">처음</a>
-				</li>
-				<li th:class="${postsPage.hasPrevious() ? '' : 'disabled'}">
-					<a th:href="@{/post/all(page=${postsPage.number - 1})}">이전</a>
-				</li>
-				<li th:each="i : ${#numbers.sequence(0, postsPage.totalPages - 1)}"
-					th:class="${postsPage.number == i ? 'active' : ''}">
-					<a th:href="@{/post/all(page=${i})}" th:text="${i + 1}"></a>
-				</li>
-				<li th:class="${postsPage.hasNext() ? '' : 'disabled'}">
-					<a th:href="@{/post/all(page=${postsPage.number + 1})}">다음</a>
-				</li>
-				<li th:class="${postsPage.last ? 'disabled' : ''}">
-					<a th:href="@{/post/all(page=${postsPage.totalPages - 1})}">끝</a>
-				</li>
-			</ul>
-		</div>
-	</div>
+    <div class="container mt-4">
+        <h1 class="mb-4">자유게시판</h1>
+        <hr>
+        <ul class="nav nav-pills mb-3">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/}">메인</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/post/all}">전체게시판</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/post/notice}">공지사항</a>
+            </li>
+        </ul>
+        <hr>
+        <div th:if="${postsPage}">
+            <table class="table table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th>글번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>등록일</th>
+                        <th>조회수</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="post : ${posts}">
+                        <td th:text="${post.postId}"></td>
+                        <td>
+                            <a th:href="@{/post/detail/{id}(id=${post.postId})}" th:text="${post.title}"></a>
+                        </td>
+                        <td th:text="${post.user.name}"></td>
+                        <td th:text="${#temporals.format(post.postRegdate, 'yyyy-MM-dd')}"></td>
+                        <td th:text="${post.postViews}"></td>
+                    </tr>
+                </tbody>
+            </table>
 
-	<a th:href="@{/post/write}" class="btn btn-primary">글쓰기</a>
+            <!-- 페이지네이션 -->
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <!-- 페이지네이션 아이템들 -->
+                </ul>
+            </nav>
+        </div>
+
+        <a th:href="@{/post/write}" class="btn btn-primary mt-3">글쓰기</a>
+    </div>
+
+    <!-- Bootstrap JS 추가 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

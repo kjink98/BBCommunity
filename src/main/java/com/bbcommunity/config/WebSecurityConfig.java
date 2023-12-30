@@ -23,7 +23,7 @@ public class WebSecurityConfig {
 						dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll() // FORWARD 타입의 모든 요청을 허용
 //						.requestMatchers("/user/userManagement").hasAuthority("ROLE_ADMIN") // '/admin/**'으로 시작하는 URL은 'ROLE_ADMIN' 권한을 가진 사용자만 접근 가능
 						.requestMatchers("/", "/index.html", "/index","/user/login", "/user/register", "/post/all", "/error/**",
-								"/css/**", "/js/**") // 인증 없이 접근 가능한 URL 패턴을 지정
+								"/css/**", "/js/**", "https://kit.fontawesome.com/**") // 인증 없이 접근 가능한 URL 패턴을 지정
 						.permitAll() // 위에서 지정한 URL 패턴에 대한 모든 요청을 허용
 						.anyRequest().authenticated() // 그 외의 모든 요청은 인증이 필요
 

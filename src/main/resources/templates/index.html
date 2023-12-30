@@ -3,79 +3,86 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>BB커뮤니티</title>
+	<title>BB커뮤니티 - 전체게시판</title>
+	<!-- Bootstrap CSS 추가 -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<!-- Font Awesome 추가 -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+	<!-- 사용자 정의 CSS 파일 링크 -->
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
 <body>
-	<h1>BB커뮤니티</h1>
+	<header th:replace="layout/header.html :: header"></header>
 
-	<div>
-		<ul>
-			<li><a th:href="@{/user/login}" th:if="${#authentication.principal == 'anonymousUser'}">로그인</a></li>
-			<form th:if="${#authentication.principal != 'anonymousUser'}" th:action="@{/logout}" method="post">
-				<input type="submit" value="로그아웃" />
-			</form>
-			<li><a th:href="@{/user/register}">회원가입</a></li>
-		</ul>
-	</div>
-	<hr>
-	<div>
-		<ul>
-			<li><a th:href="@{/post/all}">전체게시판</a></li>
-			<li><a th:href="@{/post/free}">자유게시판</a></li>
-			<li><a th:href="@{/post/notice}">공지사항</a></li>
-		</ul>
-	</div>
-
-	<h2>전체게시판</h2>
-	<div th:if="${postsPage}">
-		<table border="1">
-			<thead>
-				<tr>
-					<th>글번호</th>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>등록일</th>
-					<th>조회수</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="post : ${posts}">
-					<td>
-						<a th:href="@{/post/detail/{id}(id=${post.postId})}" th:text="${post.postId}"></a>
-					</td>
-					<td>
-						<a th:href="@{/post/detail/{id}(id=${post.postId})}" th:text="${post.title}"></a>
-					</td>
-					<td th:text="${post.user.name}"></td>
-					<td th:text="${#temporals.format(post.postRegdate, 'yyyy-MM-dd')}"></td>
-					<td th:text="${post.postViews}"></td>
-				</tr>
-			</tbody>
-		</table>
-
-		<!-- 페이지 링크 생성 -->
-		<div th:if="${postsPage.totalPages > 1}">
-			<ul class="pagination">
-				<li th:class="${postsPage.first ? 'disabled' : ''}">
-					<a th:href="@{/post/all(page=0)}">처음</a>
+	<div class="container mt-4">
+		<h1 class="text-center mb-4">BB커뮤니티</h1>
+		<div>
+			<ul class="nav nav-pills mb-3">
+				<li class="nav-item">
+					<a class="nav-link active" th:href="@{/post/all}"><i class="fas fa-baseball-ball"></i> 전체게시판</a>
 				</li>
-				<li th:class="${postsPage.hasPrevious() ? '' : 'disabled'}">
-					<a th:href="@{/post/all(page=${postsPage.number - 1})}">이전</a>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/post/free}">자유게시판</a>
 				</li>
-				<li th:each="i : ${#numbers.sequence(0, postsPage.totalPages - 1)}"
-					th:class="${postsPage.number == i ? 'active' : ''}">
-					<a th:href="@{/post/all(page=${i})}" th:text="${i + 1}"></a>
-				</li>
-				<li th:class="${postsPage.hasNext() ? '' : 'disabled'}">
-					<a th:href="@{/post/all(page=${postsPage.number + 1})}">다음</a>
-				</li>
-				<li th:class="${postsPage.last ? 'disabled' : ''}">
-					<a th:href="@{/post/all(page=${postsPage.totalPages - 1})}">끝</a>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/post/notice}">공지사항</a>
 				</li>
 			</ul>
 		</div>
+
+		<h2>전체게시판</h2>
+		<div th:if="${postsPage}">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>글번호</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>등록일</th>
+						<th>조회수</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="post : ${posts}">
+						<td>
+							<a th:href="@{/post/detail/{id}(id=${post.postId})}" th:text="${post.postId}"></a>
+						</td>
+						<td>
+							<a th:href="@{/post/detail/{id}(id=${post.postId})}" th:text="${post.title}"></a>
+						</td>
+						<td th:text="${post.user.name}"></td>
+						<td th:text="${#temporals.format(post.postRegdate, 'yyyy-MM-dd')}"></td>
+						<td th:text="${post.postViews}"></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<nav aria-label="Page navigation">
+				<ul class="pagination justify-content-center">
+					<li class="page-item" th:class="${postsPage.first ? 'disabled' : ''}">
+						<a class="page-link" th:href="@{/post/all(page=0)}" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<li th:each="i : ${#numbers.sequence(0, postsPage.totalPages - 1)}"
+						th:class="${postsPage.number == i ? 'active' : ''}" class="page-item">
+						<a class="page-link" th:href="@{/post/all(page=${i})}" th:text="${i + 1}"></a>
+					</li>
+					<li class="page-item" th:class="${postsPage.hasNext() ? '' : 'disabled'}">
+						<a class="page-link" th:href="@{/post/all(page=${postsPage.number + 1})}" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
 	</div>
+
+	<!-- Bootstrap JS 추가 -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

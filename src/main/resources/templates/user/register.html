@@ -2,32 +2,54 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <!-- Bootstrap CSS 추가 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- 사용자 정의 CSS 파일 링크 -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
 <body>
-	<h1>회원가입</h1>
-	<form th:object="${user}" th:action="@{/user/register}" method="post">
-        <label for="email">이메일:</label><br>
-        <input type="email" id="email" th:field="*{email}" required><br>
-        <label for="password">비밀번호:</label><br>
-        <input type="password" id="password" th:field="*{password}" required><br>
-        <label for="password">비밀번호 확인:</label><br>
-        <input type="password" id="passwordCheck" th:field="*{passwordCheck}" required><br>
-        <label for="name">이름:</label><br>
-        <input type="text" id="name" th:field="*{name}" required><br>
-        <label for="gender">성별:</label><br>
-        <select id="gender" th:field="*{gender}" required>
-            <option value="">성별 선택</option>
-            <option value="남">남</option>
-            <option value="녀">녀</option>
-        </select><br>
-        <label for="nickname">별명:</label><br>
-        <input type="text" id="nickname" th:field="*{nickname}" required><br>
-        <label for="role">역할:</label><br>
-        <button type="submit">회원가입</button>
-    </form>
+    <div class="container mt-5">
+        <h1 class="mb-4">회원가입</h1>
+        <form th:object="${user}" th:action="@{/user/register}" method="post">
+            <div class="form-group">
+                <label for="email">이메일:</label>
+                <input type="email" class="form-control" id="email" th:field="*{email}" required>
+            </div>
+            <div class="form-group">
+                <label for="password">비밀번호:</label>
+                <input type="password" class="form-control" id="password" th:field="*{password}" required>
+            </div>
+            <div class="form-group">
+                <label for="passwordCheck">비밀번호 확인:</label>
+                <input type="password" class="form-control" id="passwordCheck" th:field="*{passwordCheck}" required>
+            </div>
+            <div class="form-group">
+                <label for="name">이름:</label>
+                <input type="text" class="form-control" id="name" th:field="*{name}" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">성별:</label>
+                <select class="form-control" id="gender" th:field="*{gender}" required>
+                    <option value="">성별 선택</option>
+                    <option value="남">남</option>
+                    <option value="녀">녀</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="nickname">별명:</label>
+                <input type="text" class="form-control" id="nickname" th:field="*{nickname}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">회원가입</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS 추가 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>
