@@ -2,67 +2,102 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>BB커뮤니티 - 전체게시판</title>
-    <!-- Bootstrap CSS 추가 -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- 사용자 정의 CSS 파일 링크 -->
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <!-- Font Awesome 추가 -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+	<meta charset="UTF-8">
+	<title>BB커뮤니티 - 전체게시판</title>
+	<!-- Bootstrap CSS 추가 -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<!-- 사용자 정의 CSS 파일 링크 -->
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<!-- Font Awesome 추가 -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
 </head>
 
 <body>
-    <header th:replace="layout/header.html :: header"></header>
+	<header th:replace="layout/header.html :: header"></header>
 
-    <div class="container mt-4">
-        <h1 class="mb-4">전체게시판</h1>
-        <hr>
-        <div class="nav nav-pills mb-3">
-            <a class="nav-item nav-link active" th:href="@{/}">메인</a>
-            <a class="nav-item nav-link" th:href="@{/post/free}">자유게시판</a>
-            <a class="nav-item nav-link" th:href="@{/post/notice}">공지사항</a>
-        </div>
-        <hr>
-        <div th:if="${postsPage}">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>글번호</th>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>등록일</th>
-                        <th>조회수</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="post : ${posts}">
-                        <td th:text="${post.postId}"></td>
-                        <td>
-                            <a th:href="@{/post/detail/{id}(id=${post.postId})}" th:text="${post.title}"></a>
-                        </td>
-                        <td th:text="${post.user.name}"></td>
-                        <td th:text="${#temporals.format(post.postRegdate, 'yyyy-MM-dd')}"></td>
-                        <td th:text="${post.postViews}"></td>
-                    </tr>
-                </tbody>
-            </table>
+	<div class="container mt-4">
+		<h1 class="mb-4">전체게시판</h1>
+		<hr>
 
-            <!-- 페이지네이션 -->
-            <nav>
-                <ul class="pagination justify-content-center">
-                    <!-- 페이지네이션 아이템들 -->
-                </ul>
-            </nav>
-        </div>
+		<div class="nav nav-pills mb-3">
+			<a class="nav-item nav-link active" th:href="@{/}">메인</a>
+			<a class="nav-item nav-link" th:href="@{/post/free}">자유게시판</a>
+			<a class="nav-item nav-link" th:href="@{/post/notice}">공지사항</a>
+		</div>
+		<hr>
+		<div th:if="${posts}">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>글번호</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>등록일</th>
+						<th>조회수</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="post : ${posts}">
+						<td th:text="${post.postId}"></td>
+						<td>
+							<a th:href="@{/post/detail/{id}(id=${post.postId})}" th:text="${post.title}"></a>
+						</td>
+						<td th:text="${post.user.name}"></td>
+						<td th:text="${#temporals.format(post.postRegdate, 'yyyy-MM-dd')}"></td>
+						<td th:text="${post.postViews}"></td>
+					</tr>
+				</tbody>
+			</table>
 
-        <a th:href="@{/post/write}" class="btn btn-primary">글쓰기</a>
-    </div>
 
-    <!-- Bootstrap JS 추가 -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+			<!-- 검색 폼 -->
+			<form th:action="@{/post/search}" method="get" class="mb-3">
+				<div class="row justify-content-center">
+					<div class="col-lg-6">
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="검색어를 입력하세요" name="keyword">
+							<div class="input-group-append">
+								<button class="btn btn-outline-secondary" type="submit">검색</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+
+			<div th:replace="layout/pagination.html :: pagination"></div>
+		</div>
+		<div th:unless="${posts}">
+			<h3>전체 게시글</h3>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>글번호</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>등록일</th>
+						<th>조회수</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="post : ${allPosts}">
+						<td th:text="${post.postId}"></td>
+						<td>
+							<a th:href="@{/post/detail/{id}(id=${post.postId})}" th:text="${post.title}"></a>
+						</td>
+						<td th:text="${post.user.name}"></td>
+						<td th:text="${#temporals.format(post.postRegdate, 'yyyy-MM-dd')}"></td>
+						<td th:text="${post.postViews}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<a th:href="@{/post/write}" class="btn btn-primary">글쓰기</a>
+	</div>
+
+	<!-- Bootstrap JS 추가 -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

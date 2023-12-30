@@ -53,12 +53,7 @@
                 </tbody>
             </table>
 
-            <!-- 페이지네이션 -->
-            <nav>
-                <ul class="pagination justify-content-center">
-                    <!-- 페이지네이션 아이템들 -->
-                </ul>
-            </nav>
+            <div th:replace="layout/pagination.html :: pagination"></div>
         </div>
 
         <a th:href="@{/post/write}" class="btn btn-primary mt-3">글쓰기</a>

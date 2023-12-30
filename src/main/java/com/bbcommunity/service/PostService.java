@@ -89,4 +89,8 @@ public class PostService {
         }
         return false; // 삭제할 게시물이 없음
     }
+	@Transactional
+	public Page<Posts> searchPostsByTitle(String keyword, Pageable pageable) {
+        return postsRepository.findByTitleIgnoreCaseContaining(keyword, pageable);
+    }
 }

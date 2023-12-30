@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -164,4 +165,12 @@ public class PostViewController {
 			return "error/deleteErrorView";
 		}
 	}
+	
+	@GetMapping("/search")
+    public String searchPostsByTitle(@RequestParam("keyword") String keyword, Model model) {
+        Page<Posts> searchResults = postService.searchPostsByTitle(keyword, PageRequest.of(0, 10)); // 예시로 페이지는 첫 번째 페이지, 10개씩 표시
+        model.addAttribute("allPosts", searchResults.getContent()); // 검색 결과를 posts에 저장하여 템플릿에 전달
+
+        return "post/allPostsView"; // 여기에는 실제 게시판 페이지의 템플릿명을 입력해야 합니다.
+    }
 }
