@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>비밀번호 변경</title>
+	<!-- Bootstrap CSS 추가 -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<!-- 사용자 정의 CSS 파일 링크 -->
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+	<div class="container mt-5">
+		<h2 class="mb-3">비밀번호 변경</h2>
+		<hr>
+		<form th:action="@{/user/changePw}" method="post">
+			<div class="form-group">
+				<label for="exPassword">현재 비밀번호 :</label>
+				<input type="password" class="form-control" id="exPassword" name="exPassword" required>
+			</div>
+			<div class="form-group">
+				<label for="newPassword">변경할 비밀번호 :</label>
+				<input type="password" class="form-control" id="newPassword" name="newPassword" required>
+			</div>
+			<div class="form-group">
+				<label for="newPasswordChk">변경할 비밀번호 확인 :</label>
+				<input type="password" class="form-control" id="newPasswordChk" name="newPasswordChk" required>
+			</div>
+			<div class="form-group d-flex align-items-center">
+                <button type="button" onclick="goBack()" class="btn btn-secondary">취소</button>
+                <button type="submit" class="btn btn-primary">변경</button>
+            </div>
+		</form>
+	</div>
+	
+	<script>
+		function goBack() {
+			window.history.back();
+		}
+	</script>
+	<!-- Bootstrap JS 추가 -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>내 정보 조회</title>
+	<!-- Bootstrap CSS 추가 -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<!-- 사용자 정의 CSS 파일 링크 -->
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+	<header th:replace="layout/header.html :: header"></header>
+	<div class="container mt-5">
+		<h1 class="mb-4">내 정보 조회</h1>
+		<div class="card">
+			<div class="card-body">
+				<h2 class="card-title" th:text="*{name}">사용자 이름</h2>
+				<p class="card-text"><strong>이메일:</strong> <span th:text="*{email}"></span></p>
+				<p class="card-text"><strong>성별:</strong> <span th:text="*{gender}">성별</span></p>
+				<p class="card-text"><strong>별명:</strong> <span th:text="*{nickname}">별명</span></p>
+				<p class="card-text"><strong>가입일:</strong> <span
+						th:text="${#temporals.format(regdate, 'yyyy-MM-dd HH:mm:ss')}">가입일</span></p>
+				<p class="card-text"><strong>역할:</strong> <span th:text="*{role}">역할</span></p>
+				<hr>
+				<form th:action="@{/user/changeInfo}" method="post">
+					현재 닉네임 : <a th:text="${nickname}"></a> <br><br>
+					바꿀 닉네임 : <input type="text" name="newNickname">
+					<br> <br>
+					<input type="submit" value="변경">
+				</form>
+			</div>
+		</div>
+		<button onclick="goBack()" class="btn btn-secondary mb-4">뒤로 가기</button>
+	</div>
+
+
+	<script>
+		function goBack() {
+			window.history.back();
+		}
+	</script>
+	<!-- Bootstrap JS 추가 -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

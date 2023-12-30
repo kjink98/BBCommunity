@@ -28,6 +28,7 @@ public class UserViewController {
 	    return "user/login";
 	}
 	
+	
 	@GetMapping("/myInfo")
 	public String myInfo(Model model) {
         // 현재 로그인 중인 사용자의 Member 엔티티를 가져옴
@@ -46,4 +47,33 @@ public class UserViewController {
 
         return "user/myInfo";
     }
+	
+	@GetMapping("/changePw")
+	public String changePw() {
+	    return "user/changePw";
+	}
+	
+	@GetMapping("/changeInfo")
+	public String changeInfo(Model model) {
+		// 현재 로그인 중인 사용자의 Member 엔티티를 가져옴
+        User loggedInUser = userService.getCurrentLoggedInMember();
+        if (loggedInUser != null) {
+            model.addAttribute("name", loggedInUser.getName());
+            model.addAttribute("email", loggedInUser.getEmail());
+            model.addAttribute("gender", loggedInUser.getGender());
+            model.addAttribute("nickname", loggedInUser.getNickname());
+            model.addAttribute("regdate", loggedInUser.getRegdate());
+            model.addAttribute("role", loggedInUser.getRole());
+            model.addAttribute("nickname", loggedInUser.getNickname());
+        } else {
+            // 로그인 안됐을때 로그인 페이지로 이동시키기
+        	return "user/login";
+        }
+	    return "user/changeInfo";
+	}
+	
+	@GetMapping("/resign")
+	public String resignPage() {
+	    return "user/resign";
+	}
 }

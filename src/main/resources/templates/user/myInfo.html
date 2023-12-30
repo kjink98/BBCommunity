@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>내 정보 조회</title>
-    <!-- Bootstrap CSS 추가 -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- 사용자 정의 CSS 파일 링크 -->
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+	<meta charset="UTF-8">
+	<title>비밀번호 변경</title>
+	<!-- Bootstrap CSS 추가 -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<!-- 사용자 정의 CSS 파일 링크 -->
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
+
 <body>
 	<header th:replace="layout/header.html :: header"></header>
     <div class="container mt-5">
@@ -20,19 +22,22 @@
                 <p class="card-text"><strong>별명:</strong> <span th:text="*{nickname}">별명</span></p>
                 <p class="card-text"><strong>가입일:</strong> <span th:text="${#temporals.format(regdate, 'yyyy-MM-dd HH:mm:ss')}">가입일</span></p>
                 <p class="card-text"><strong>역할:</strong> <span th:text="*{role}">역할</span></p>
+            	<a th:href="@{/user/changePw}" class="btn btn-link">비밀번호 변경</a>
+            	<a th:href="@{/user/changeInfo}" class="btn btn-link">내 정보 변경</a>
             </div>
         </div>
         <button onclick="goBack()" class="btn btn-secondary mb-4">뒤로 가기</button>
     </div>
-    
+	
 	<script>
 		function goBack() {
 			window.history.back();
 		}
 	</script>
-    <!-- Bootstrap JS 추가 -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<!-- Bootstrap JS 추가 -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
