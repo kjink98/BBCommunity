@@ -1,11 +1,17 @@
 package com.bbcommunity.controller;
 
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bbcommunity.dto.UserRegisterDto;
+import com.bbcommunity.dto.UserRolesRequest;
 import com.bbcommunity.entity.User;
 import com.bbcommunity.service.UserService;
 
@@ -75,5 +81,18 @@ public class UserViewController {
 	@GetMapping("/resign")
 	public String resignPage() {
 	    return "user/resign";
+	}
+	
+	@GetMapping("/userManagement")
+	public String userManagement(Model model) {
+		List<User> users = userService.getAllUsers();
+		model.addAttribute("users", users);
+		return "user/userManagement";
+	}
+	
+	@PostMapping("/userManagement")
+	public ResponseEntity<?> updateRoles(@RequestBody UserRolesRequest request) {
+	    userService.updateRoles(request.getEmail(), request.getRole());
+	    return ResponseEntity.ok("Roles updated successfully");
 	}
 }
