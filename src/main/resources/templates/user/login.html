@@ -1,38 +1,55 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>로그인</title>
-    <!-- Bootstrap CSS 추가 -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- 사용자 정의 CSS 파일 링크 -->
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <div class="mb-3">
-            <h2>로그인</h2>
-        </div>
-        <form method="post" action="/login-process">
-            <div class="form-group">
-                <label for="email">ID</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="ID" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-            </div>
-            <div class="form-group d-flex align-items-center">
-                <button type="submit" class="btn btn-primary mr-2">로그인</button>
-                <a th:href="@{/user/register}" class="btn btn-outline-primary">회원가입</a>
-            </div>
-        </form>
-        <a href="/" class="btn btn-link">메인으로</a>
-    </div>
 
-    <!-- Bootstrap JS 추가 -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<head>
+	<meta charset="UTF-8">
+	<title>로그인</title>
+	<!-- Bootstrap CSS 추가 -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<!-- 사용자 정의 CSS 파일 링크 -->
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+	<div class="container mt-5">
+		<div class="mb-3">
+			<h2>로그인</h2>
+		</div>
+		<form method="post" action="/login-process">
+			<div class="form-group">
+				<label for="email">ID</label>
+				<input type="email" class="form-control" id="email" name="email" placeholder="ID" required>
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" class="form-control" id="password" name="password" placeholder="Password"
+					required>
+			</div>
+			<div class="form-group d-flex align-items-center">
+				<button type="submit" class="btn btn-primary mr-2">로그인</button>
+				<a th:href="@{/user/register}" class="btn btn-outline-primary">회원가입</a>
+			</div>
+		</form>
+
+		<hr />
+		<!-- OAuth 로그인 버튼 -->
+		<a th:href="@{/oauth2/authorization/google}" class="btn btn-google btn-user btn-block" role="button">
+			<i class="fab fa-google fa-fw"></i> 구글 로그인
+		</a> <br>
+		<a th:href="@{/oauth2/authorization/naver}" class="btn btn-naver btn-user btn-block" role="button">
+			<i class="fab fa-naver fa-fw"></i> 네이버 로그인
+		</a> <br>
+		<a th:href="@{/oauth2/authorization/kakao}" class="btn btn-kakao btn-user btn-block" role="button">
+			<i class="fab fa-kakao fa-fw"></i> 카카오 로그인
+		</a>
+
+		<a href="/" class="btn btn-link">메인으로</a>
+	</div>
+
+	<!-- Bootstrap JS 추가 -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>

@@ -69,9 +69,9 @@ public class User {
 	}
 
 	// 수정 메소드
-	public User update(String name, String nickname, String password, PasswordEncoder passwordEncoder) {
+	public User update(String name, String email, String password, PasswordEncoder passwordEncoder) {
 		this.name = name;
-		this.nickname = nickname;
+		this.email = email;
 		this.password = passwordEncoder.encode(password);
 		return this;
 	}

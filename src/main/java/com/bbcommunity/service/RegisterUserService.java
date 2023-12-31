@@ -39,8 +39,8 @@ public class RegisterUserService {
 
 
 	private void validateDuplicateMember(User user) {
-		userRepository.findByEmail(user.getEmail()).ifPresent(m -> {
-			System.out.println("error : " + m);
-		});
+	    userRepository.findByEmail(user.getEmail()).ifPresent(m -> {
+	        throw new IllegalStateException("이미 가입된 회원입니다.");
+	    });
 	}
 }

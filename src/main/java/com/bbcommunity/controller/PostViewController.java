@@ -96,6 +96,7 @@ public class PostViewController {
 	public String savePost(@ModelAttribute PostForm postForm) {
 		User user = userService.getCurrentLoggedInMember();
 		postForm.setUser(user);
+		System.out.println("controller"+user);
 		postService.save(postForm);
 		return "redirect:/post/all";
 	}

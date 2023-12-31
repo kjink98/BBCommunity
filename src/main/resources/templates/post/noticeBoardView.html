@@ -53,7 +53,24 @@
                 </tbody>
             </table>
 
-           <div th:replace="layout/pagination.html :: pagination"></div>
+           <nav aria-label="Page navigation">
+				<ul class="pagination justify-content-center">
+					<li class="page-item" th:class="${postsPage.first ? 'disabled' : ''}">
+						<a class="page-link" th:href="@{/post/notice(page=0)}" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<li th:each="i : ${#numbers.sequence(0, postsPage.totalPages - 1)}"
+						th:class="${postsPage.number == i ? 'active' : ''}" class="page-item">
+						<a class="page-link" th:href="@{/post/notice(page=${i})}" th:text="${i + 1}"></a>
+					</li>
+					<li class="page-item" th:class="${postsPage.hasNext() ? '' : 'disabled'}">
+						<a class="page-link" th:href="@{/post/notice(page=${postsPage.number + 1})}" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
         </div>
 
         <a th:href="@{/post/write}" class="btn btn-primary mt-3">글쓰기</a>

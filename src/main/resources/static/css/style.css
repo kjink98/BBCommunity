@@ -39,3 +39,22 @@ body {
     color: #ccc; /* 비활성화 링크 색상 */
 }
 
+.btn-google {
+    background-color: #db4437;
+    color: white;
+}
+
+.btn-naver {
+    background-color: #1ec800;
+    color: white;
+}
+
+.btn-kakao {
+    background-color: #fee500;
+    color: black;
+}
+
+/* Font Awesome 아이콘 색상 지정 */
+.fab {
+    color: white;
+}

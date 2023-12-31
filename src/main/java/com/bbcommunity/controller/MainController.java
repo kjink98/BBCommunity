@@ -26,7 +26,7 @@ public class MainController {
 	@GetMapping("/")
     public String index(Model model, @RequestParam(defaultValue = "0") int page) {
         // 페이지 번호와 페이지 크기를 이용하여 Pageable 객체를 생성
-        PageRequest pageable = PageRequest.of(page, 10, Sort.by("postRegdate").descending()); // 페이지 크기는 10으로 설정 (원하는 크기로 변경 가능)
+        PageRequest pageable = PageRequest.of(page, 5, Sort.by("postRegdate").descending()); // 페이지 크기는 10으로 설정 (원하는 크기로 변경 가능)
 
         // 페이징된 데이터 가져오기
         Page<Posts> postsPage = postService.findAll(pageable);

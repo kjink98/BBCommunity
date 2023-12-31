@@ -2,6 +2,7 @@ package com.bbcommunity.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -9,12 +10,21 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.bbcommunity.service.CustomOAuth2UserService;
+
 import jakarta.servlet.DispatcherType;
 
 @EnableWebSecurity //  Spring Security 설정을 활성화
 @EnableMethodSecurity(prePostEnabled = true) //메소드 수준에서 보안 설정을 활성화, 메소드 접근 전에 보안 표현식을 평가
 @Configuration
 public class WebSecurityConfig {
+	private final CustomOAuth2UserService customOAuth2UserService;
+
+	// RequiredArgs로 생성자를 초기화하면 순환 참조 에러로 실행이 안됨.
+	// Lazy로 실제 실행할때 생성자를 만들도록
+	public WebSecurityConfig(@Lazy CustomOAuth2UserService customOAuth2UserService) {
+		this.customOAuth2UserService = customOAuth2UserService;
+	}
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
@@ -46,7 +56,20 @@ public class WebSecurityConfig {
 						.permitAll() // 로그아웃 과정에서의 모든 요청을 허용
 						.invalidateHttpSession(true)) // 로그아웃 성공 후 HTTP 세션을 무효화
 
-				
+				/* OAuth 로그인 처리 */
+				.oauth2Login() // OAuth2 로그인 기능에 대한 설정 진입점
+				.userInfoEndpoint() // OAuth 2 로그인 성공 후 사용자 정보를 가져오는 설정을 담당
+				.userService(customOAuth2UserService) // 소셜 로그인 성공 시 후속 조치를 진행할 UserService 인터페이스의 구현체를 등록
+				.and().loginPage("/user/login") // 사용자 정의 로그인 페이지 URL을 지정
+				.defaultSuccessUrl("/", true) // 로그인 성공 후 리다이렉트할 URL을 지정
+				.failureUrl("/user/loginView") // 로그인 실패 시 리다이렉트할 URL을 지정
+				.and()
+
+				/* OAuth 로그아웃 처리 */
+				.logout(logout -> logout.logoutSuccessUrl("/") // 로그아웃 성공 후 리다이렉트할 URL을 지정
+						.permitAll() // 로그아웃 과정에서의 모든 요청을 허용
+						.invalidateHttpSession(true)) // 로그아웃 성공 후 HTTP 세션을 무효화
+				.cors(cors -> cors.disable())
 
 				.exceptionHandling().accessDeniedPage("/"); // 접근이 거부된 경우 리다이렉트할 URL을 지정
 		;
