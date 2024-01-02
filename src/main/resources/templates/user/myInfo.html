@@ -12,24 +12,26 @@
 
 <body>
 	<header th:replace="layout/header.html :: header"></header>
-    <div class="container mt-5">
-        <h1 class="mb-4">내 정보 조회</h1>
-        <div class="card">
-            <div class="card-body">
-                <h2 class="card-title" th:text="*{name}">사용자 이름</h2>
-                <p class="card-text"><strong>이메일:</strong> <span th:text="*{email}">user@example.com</span></p>
-                <p class="card-text"><strong>성별:</strong> <span th:text="*{gender}">성별</span></p>
-                <p class="card-text"><strong>별명:</strong> <span th:text="*{nickname}">별명</span></p>
-                <p class="card-text"><strong>가입일:</strong> <span th:text="${#temporals.format(regdate, 'yyyy-MM-dd HH:mm:ss')}">가입일</span></p>
-                <p class="card-text"><strong>역할:</strong> <span th:text="*{role}">역할</span></p>
-            	<a th:href="@{/user/changePw}" class="btn btn-link">비밀번호 변경</a>
-            	<a th:href="@{/user/changeInfo}" class="btn btn-link">내 정보 변경</a>
-            	<a th:href="@{/user/resign}" class="btn btn-link">탈퇴하기</a>
-            </div>
-        </div>
-        <button onclick="goBack()" class="btn btn-secondary mb-4">뒤로 가기</button>
-    </div>
-	
+	<div class="container mt-5">
+		<h1 class="mb-4">내 정보 조회</h1>
+		<div class="card">
+			<div class="card-body">
+				<h2 class="card-title" th:text="*{name}">사용자 이름</h2>
+				<p class="card-text"><strong>이메일:</strong> <span th:text="*{email}">user@example.com</span></p>
+				<p class="card-text"><strong>성별:</strong> <span th:text="*{gender}">성별</span></p>
+				<p class="card-text"><strong>별명:</strong> <span th:text="*{nickname}">별명</span></p>
+				<p class="card-text"><strong>가입일:</strong> <span
+						th:text="${#temporals.format(regdate, 'yyyy-MM-dd HH:mm:ss')}">가입일</span></p>
+				<p class="card-text"><strong>역할:</strong> <span th:text="*{role}">역할</span></p>
+				<a th:href="@{/user/changePw}" class="btn btn-link">비밀번호 변경</a>
+				<a th:href="@{/user/changeInfo}" class="btn btn-link">내 정보 변경</a>
+				<a th:if="${isAdmin}" th:href="@{/user/userManagement}">관리자 페이지</a></li>
+				<a th:href="@{/user/resign}" class="btn btn-link">탈퇴하기</a>
+			</div>
+		</div>
+		<button onclick="goBack()" class="btn btn-secondary mb-4">뒤로 가기</button>
+	</div>
+
 	<script>
 		function goBack() {
 			window.history.back();

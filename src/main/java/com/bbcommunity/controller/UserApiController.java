@@ -72,4 +72,15 @@ public class UserApiController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비밀번호가 맞지 않습니다.");
 		}
 	}
+	
+	@PostMapping("/deleteUser")
+	public ResponseEntity<String> deleteUser(@RequestParam Long userId, HttpServletRequest request) {
+		// 현재 인증된 사용자를 가져옴
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		 int check = userService.deleteUser(userId);
+		    if (check != 1) {
+		        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("사용자를 탈퇴시키지 못했습니다.");
+		    }
+	    return ResponseEntity.ok("탈퇴 완료");
+	}
 }

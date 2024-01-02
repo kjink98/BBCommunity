@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.bbcommunity.dto.UserRegisterDto;
 import com.bbcommunity.dto.UserRolesRequest;
 import com.bbcommunity.entity.User;
+import com.bbcommunity.role.Role;
 import com.bbcommunity.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,10 @@ public class UserViewController {
             model.addAttribute("nickname", loggedInUser.getNickname());
             model.addAttribute("regdate", loggedInUser.getRegdate());
             model.addAttribute("role", loggedInUser.getRole());
+            
+            // 관리자인지 여부를 판단하여 모델에 추가
+            boolean isAdmin = loggedInUser.getRole() == Role.ADMIN;
+            model.addAttribute("isAdmin", isAdmin);
         } else {
             // 로그인 안됐을때 로그인 페이지로 이동시키기
         	return "user/login";

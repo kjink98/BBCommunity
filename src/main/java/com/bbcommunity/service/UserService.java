@@ -126,6 +126,12 @@ public class UserService {
 
 		return userRepository.resignUser(email);
 	}
+	
+	public int deleteUser(Long userId) {
+		User user = userRepository.findById(userId).orElse(null);
+
+		return userRepository.deleteUser(userId);
+	}
 
 	/**
 	 * 모든 사용자 정보를 데이터베이스에서 가져오는 메소드

@@ -40,7 +40,15 @@
 					<td>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#roleModal"
 							th:data-email="${user.email}" onclick="openModal(this.getAttribute('data-email'))">수정</a>
-						<a th:href="@{/user/delete/{id}(id=${user.email})}" class="btn btn-danger">탈퇴</a>
+						<button type="button" class="btn btn-danger" th:data-user-id="${user.id}"
+							onclick="openDeleteModal(this.getAttribute('data-user-id'))">탈퇴</button>
+
+						<!--
+						<form th:action="@{/user/deleteUser}" method="post">
+							<input type="hidden" name="userId" th:value="${user.id}">
+							<input type="submit" value="탈퇴" class="btn btn-danger">
+						</form>
+						<-->
 					</td>
 				</tr>
 			</tbody>
@@ -80,9 +88,32 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- 탈퇴 확인 모달 -->
+	<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="confirmDeleteModalLabel">탈퇴 확인</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					정말로 탈퇴하시겠습니까? 이 작업은 되돌릴 수 없습니다.
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-danger" onclick="confirmDelete()">탈퇴</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- 모달 끝 -->
 	<script>
 		var currentEmail = null;
+		var currentUserId = null;
 
 		function openModal(email) {
 			currentEmail = email;
@@ -121,7 +152,37 @@
 					location.reload();
 				})
 		}
+		function openDeleteModal(userId) {
+			currentUserId = userId;
+			$('#confirmDeleteModal').modal('show');
+		}
 
+		function confirmDelete() {
+			// 서버에 탈퇴 요청을 보냅니다.
+			fetch('/user/deleteUser', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+				},
+				body: new URLSearchParams({
+					'userId': currentUserId
+				})
+			})
+				.then(response => {
+					if (!response.ok) {
+						throw new Error('Network response was not ok');
+					}
+					return response.text();
+				})
+				.then(data => {
+					$('#confirmDeleteModal').modal('hide');
+					alert('사용자가 탈퇴되었습니다.');
+					location.reload();
+				})
+				.catch((error) => {
+					console.error('Error:', error);
+				});
+		}
 	</script>
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.1/dist/umd/popper.min.js"></script>
