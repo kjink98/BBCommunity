@@ -17,17 +17,12 @@
 	<div class="container mt-4">
 		<h1 class="mb-4">자유게시판</h1>
 		<hr>
-		<ul class="nav nav-pills mb-3">
-			<li class="nav-item">
-				<a class="nav-link" th:href="@{/}">메인</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" th:href="@{/post/all}">전체게시판</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" th:href="@{/post/notice}">공지사항</a>
-			</li>
-		</ul>
+		<div class="nav nav-pills mb-3">
+			<a class="nav-item nav-link font-weight-bold text-uppercase" th:href="@{/}">메인</a>
+			<a class="nav-item nav-link" th:href="@{/post/all}">전체게시판</a>
+			<a class="nav-item nav-link active" th:href="@{/post/free}">자유게시판</a>
+			<a class="nav-item nav-link" th:href="@{/post/notice}">공지사항</a>
+		</div>
 		<hr>
 		<div th:if="${postsPage}">
 			<table class="table table-hover">
