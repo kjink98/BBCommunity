@@ -37,6 +37,7 @@
 				<thead>
 					<tr>
 						<th>글번호</th>
+						<th>게시판</th>
 						<th>제목</th>
 						<th>작성자</th>
 						<th>등록일</th>
@@ -48,6 +49,7 @@
 						<td>
 							<a th:href="@{/post/detail/{id}(id=${post.postId})}" th:text="${post.postId}"></a>
 						</td>
+						<td th:text="${post.board.boardName}"></td>
 						<td>
 							<a th:href="@{/post/detail/{id}(id=${post.postId})}" th:text="${post.title}"></a>
 						</td>
