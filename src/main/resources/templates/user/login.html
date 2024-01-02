@@ -4,6 +4,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>로그인</title>
+	
+	
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<!-- Bootstrap CSS 추가 -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<!-- 사용자 정의 CSS 파일 링크 -->
@@ -15,7 +18,7 @@
 		<div class="mb-3">
 			<h2>로그인</h2>
 		</div>
-		<form method="post" action="/login-process">
+		<form id="loginForm" method="post" action="/login-process">
 			<div class="form-group">
 				<label for="email">ID</label>
 				<input type="email" class="form-control" id="email" name="email" placeholder="ID" required>
@@ -46,8 +49,55 @@
 		<a href="/" class="btn btn-link">메인으로</a>
 	</div>
 
+
+
+	<!-- 모달창 구현 -->
+	<div class="modal fade" id="loginErrorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">로그인 실패</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- 서버에서 받은 에러 메시지가 여기에 들어감 -->
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script>
+		$('#loginForm').submit(function (e) {
+			e.preventDefault(); // 폼의 기본 submit 동작을 막음
+
+			$.ajax({
+				url: '/login-process', // 로그인 요청을 보낼 URL
+				type: 'post', // HTTP 메소드
+				data: $(this).serialize(), // 로그인 폼의 데이터를 직렬화
+				success: function () {
+					// 로그인 성공 시 동작. 예를 들면 메인 페이지로 리다이렉트
+					window.location.href = '/';
+				},
+				error: function (xhr) {
+					console.log(xhr);
+					// 로그인 실패 시 동작. 모달창을 띄움
+					var response = JSON.parse(xhr.responseText);
+					$('#loginErrorModal .modal-body').text(response.message);
+					$('#loginErrorModal').modal('show');
+				}
+			});
+		});
+
+	</script>
+	
 	<!-- Bootstrap JS 추가 -->
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

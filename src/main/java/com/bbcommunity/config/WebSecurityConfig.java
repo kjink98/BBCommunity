@@ -47,7 +47,7 @@ public class WebSecurityConfig {
 						.usernameParameter("email") // 로그인 폼에서 사용자 ID를 받을 파라미터의 이름을 지정
 						.passwordParameter("password") // 로그인 폼에서 비밀번호를 받을 파라미터의 이름을 지정
 						.defaultSuccessUrl("/", true)  // 로그인 성공 후 리다이렉트할 URL을 지정
-						.failureForwardUrl("/user/loginView") // 로그인 실패 시 포워드할 URL을 지정
+						.failureHandler(new CustomAuthenticationFailureHandler())
 						.permitAll()) // 로그인 과정에서의 모든 요청을 허용
 
 				/* 폼 로그아웃 처리 */
