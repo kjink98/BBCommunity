@@ -13,11 +13,10 @@
 <body>
     <div class="container mt-5">
         <h1 class="mb-4">글쓰기</h1>
-        <form th:action="@{/post/write}" method="post">
+        <form th:action="@{/post/write/notice}" method="post">
             <div class="form-group">
                 <label for="boardType">게시판 종류</label>
                 <select class="form-control" id="boardId" name="boardId">
-                    <option value="1">자유게시판</option>
                     <option value="2">공지사항</option>
                 </select>
             </div>

@@ -73,7 +73,7 @@
 			</nav>
         </div>
 
-        <a th:href="@{/post/write}" class="btn btn-primary mt-3">글쓰기</a>
+        <a th:if="${isAdmin}" th:href="@{/post/write/notice}" class="btn btn-primary mt-3">글쓰기</a>
     </div>
 
     <!-- Bootstrap JS 추가 -->

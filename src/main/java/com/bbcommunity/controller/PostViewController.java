@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +22,7 @@ import com.bbcommunity.entity.Board;
 import com.bbcommunity.entity.Comment;
 import com.bbcommunity.entity.Posts;
 import com.bbcommunity.entity.User;
+import com.bbcommunity.role.Role;
 import com.bbcommunity.service.BoardService;
 import com.bbcommunity.service.CommentService;
 import com.bbcommunity.service.PostService;
@@ -74,6 +74,11 @@ public class PostViewController {
 
 	@GetMapping("/notice")
 	public String noticeBoard(Model model, @RequestParam(defaultValue = "0") int page) {
+		User loggedInUser = userService.getCurrentLoggedInMember();
+		
+		boolean isAdmin = loggedInUser.getRole() == Role.ADMIN;
+		model.addAttribute("isAdmin", isAdmin);
+		
 		Board board = boardService.getBoardById((long) 2);
 		Pageable pageable = PageRequest.of(page, 10, Sort.by("postRegdate").descending());
 		Page<Posts> postsPage = postService.findByBoardBoardId(board.getBoardId(), pageable);
@@ -86,19 +91,39 @@ public class PostViewController {
 		return "post/noticeBoardView";
 	}
 
-	@GetMapping("/write")
-	public String writePost() {
-		// 'post/writePost' 뷰로 이동
-		return "post/writePost";
+	@GetMapping("/write/free")
+	public String writeFreePost() {
+		return "post/writeFreePost";
 	}
 
-	@PostMapping("/write")
-	public String savePost(@ModelAttribute PostForm postForm) {
+	@GetMapping("/write/notice")
+	public String writeNoticePost(Model model) {
+		return "post/writeNoticePost";
+	}
+
+	@PostMapping("/write/free")
+	public String saveFreePost(@ModelAttribute PostForm postForm) {
+		// 자유 게시판 글 저장 로직
 		User user = userService.getCurrentLoggedInMember();
 		postForm.setUser(user);
-		System.out.println("controller"+user);
+		postForm.setBoard(boardService.getBoardById(1L)); // 자유 게시판 ID로 설정
 		postService.save(postForm);
-		return "redirect:/post/all";
+		return "redirect:/post/free";
+	}
+
+	@PostMapping("/write/notice")
+	public String saveNoticePost(@ModelAttribute PostForm postForm, Model model) {
+		// 공지사항 게시판 글 저장 로직
+		User loggedInUser = userService.getCurrentLoggedInMember();
+		// 로그인한 사용자가 관리자인지 확인
+	    if (loggedInUser.getRole() != Role.ADMIN) {
+	        // 관리자가 아니라면 에러 메시지를 담고, 글쓰기 페이지로 리다이렉트
+	        return "redirect:/post/write/notice";
+	    }
+		postForm.setUser(loggedInUser);
+		postForm.setBoard(boardService.getBoardById(2L)); // 공지사항 게시판 ID로 설정
+		postService.save(postForm);
+		return "redirect:/post/notice";
 	}
 
 	@GetMapping("/detail/{id}")
@@ -111,7 +136,7 @@ public class PostViewController {
 			// 해당 게시글의 댓글 목록을 가져와 모델에 추가
 			List<Comment> comments = commentService.getCommentsByPost(post.get());
 			model.addAttribute("comments", comments);
-			
+
 			// 새 댓글을 생성하기 위한 빈 Comment 객체도 모델에 추가
 			model.addAttribute("newComment", new Comment());
 
@@ -166,12 +191,13 @@ public class PostViewController {
 			return "error/deleteErrorView";
 		}
 	}
-	
-	@GetMapping("/search")
-    public String searchPostsByTitle(@RequestParam("keyword") String keyword, Model model) {
-        Page<Posts> searchResults = postService.searchPostsByTitle(keyword, PageRequest.of(0, 10)); // 예시로 페이지는 첫 번째 페이지, 10개씩 표시
-        model.addAttribute("allPosts", searchResults.getContent()); // 검색 결과를 posts에 저장하여 템플릿에 전달
 
-        return "post/allPostsView"; // 여기에는 실제 게시판 페이지의 템플릿명을 입력해야 합니다.
-    }
+	@GetMapping("/search")
+	public String searchPostsByTitle(@RequestParam("keyword") String keyword, Model model) {
+		Page<Posts> searchResults = postService.searchPostsByTitle(keyword, PageRequest.of(0, 10)); // 예시로 페이지는 첫 번째
+																									// 페이지, 10개씩 표시
+		model.addAttribute("allPosts", searchResults.getContent()); // 검색 결과를 posts에 저장하여 템플릿에 전달
+
+		return "post/allPostsView"; // 여기에는 실제 게시판 페이지의 템플릿명을 입력해야 합니다.
+	}
 }
