@@ -2,54 +2,91 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>회원가입</title>
-    <!-- Bootstrap CSS 추가 -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- 사용자 정의 CSS 파일 링크 -->
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+	<meta charset="UTF-8">
+	<title>회원가입</title>
+	<!-- Bootstrap CSS 추가 -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<!-- 사용자 정의 CSS 파일 링크 -->
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
 <body>
-    <div class="container mt-5">
-        <h1 class="mb-4">회원가입</h1>
-        <form th:object="${user}" th:action="@{/user/register}" method="post">
-            <div class="form-group">
-                <label for="email">이메일:</label>
-                <input type="email" class="form-control" id="email" th:field="*{email}" required>
-            </div>
-            <div class="form-group">
-                <label for="password">비밀번호:</label>
-                <input type="password" class="form-control" id="password" th:field="*{password}" required>
-            </div>
-            <div class="form-group">
-                <label for="passwordCheck">비밀번호 확인:</label>
-                <input type="password" class="form-control" id="passwordCheck" th:field="*{passwordCheck}" required>
-            </div>
-            <div class="form-group">
-                <label for="name">이름:</label>
-                <input type="text" class="form-control" id="name" th:field="*{name}" required>
-            </div>
-            <div class="form-group">
-                <label for="gender">성별:</label>
-                <select class="form-control" id="gender" th:field="*{gender}" required>
-                    <option value="">성별 선택</option>
-                    <option value="남">남</option>
-                    <option value="녀">녀</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="nickname">별명:</label>
-                <input type="text" class="form-control" id="nickname" th:field="*{nickname}" required>
-            </div>
-            <button type="submit" class="btn btn-primary">회원가입</button>
-        </form>
-    </div>
+	<div class="container mt-5">
+		<h1 class="mb-4">회원가입</h1>
+		<form th:object="${user}" th:action="@{/user/register}" method="post">
+			<div class="form-group">
+				<label for="email">이메일:</label>
+				<input type="email" class="form-control" id="email" th:field="*{email}" required>
+			</div>
+			<div class="form-group">
+				<label for="password">비밀번호:</label>
+				<input type="password" class="form-control" id="password" th:field="*{password}" required>
+			</div>
+			<div class="form-group">
+				<label for="passwordCheck">비밀번호 확인:</label>
+				<input type="password" class="form-control" id="passwordCheck" th:field="*{passwordCheck}" required>
+			</div>
+			<div class="form-group">
+				<label for="name">이름:</label>
+				<input type="text" class="form-control" id="name" th:field="*{name}" required>
+			</div>
+			<div class="form-group">
+				<label for="gender">성별:</label>
+				<select class="form-control" id="gender" th:field="*{gender}" required>
+					<option value="">성별 선택</option>
+					<option value="남">남</option>
+					<option value="녀">녀</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="nickname">별명:</label>
+				<input type="text" class="form-control" id="nickname" th:field="*{nickname}" required>
+			</div>
+			<button type="submit" class="btn btn-primary">회원가입</button>
+		</form>
+	</div>
 
-    <!-- Bootstrap JS 추가 -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	<!-- 오류 메시지를 표시할 모달 -->
+	<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="errorModalLabel">오류</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="닫기">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p id="errorMessage">비밀번호와 비밀번호 확인이 일치하지 않습니다.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Bootstrap JS 추가 -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	<script>
+    $(document).ready(function () {
+        // 폼 제출 시 비밀번호 일치 여부 확인
+        $('form').submit(function (event) {
+            var password = $('#password').val();
+            var passwordCheck = $('#passwordCheck').val();
+
+            if (password !== passwordCheck) {
+                event.preventDefault(); // 폼 제출 방지
+                $('#errorModal').modal('show'); // 오류 메시지를 담은 모달 표시
+            }
+        });
+    });
+</script>
+
 </body>
 
 </html>

@@ -23,9 +23,6 @@ public class RegisterUserService {
 
 	@Transactional
 	public User register(String email, String password, String passwordCheck, String name, String gender, String nickname) {
-		if (!password.equals(passwordCheck)) {
-	        throw new IllegalArgumentException("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-	    }
 	    LocalDateTime regdate = LocalDateTime.now();
 	    Role role = Role.USER;
 	    
