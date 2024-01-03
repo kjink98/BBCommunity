@@ -35,7 +35,7 @@ public class AuthorizationController {
 	        return "user/registerSuccess";  // Thymeleaf 템플릿 이름
 	    } catch (Exception e) {
 	        model.addAttribute("message", e.getMessage());
-	        return "registerError";  // Thymeleaf 템플릿 이름
+	        return "error/registerError";
 	    }
 	}
 
