@@ -13,8 +13,8 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-.application-oauth.properties
-.build
+application-oauth.properties
+build/
 # External tool builders
 .externalToolBuilders/
 
