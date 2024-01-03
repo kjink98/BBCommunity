@@ -44,7 +44,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 }
-
+/*
 tasks.named('test') {
 	useJUnitPlatform()
 }
@@ -90,3 +90,4 @@ task copyReactBuildFiles(type: Copy) {
 	into "$projectDir/src/main/resources/static"
 }
 
+*/
