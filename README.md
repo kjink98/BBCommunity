@@ -132,7 +132,7 @@
 ------------
 
 4. <h3 id="admin">관리자 페이지</h3>
-![image](https://github.com/kjink98/BBCommunity/assets/113023365/8c1e20b9-1f34-4ad3-8a29-34390780866b)
+![image](https://github.com/kjink98/BBCommunity/assets/113023365/7e72d893-a481-46f4-a9ad-249bcf37bb4c)
 
 **관리자 페이지**
 
