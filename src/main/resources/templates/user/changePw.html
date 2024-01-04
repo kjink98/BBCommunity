@@ -28,21 +28,44 @@
 				<input type="password" class="form-control" id="newPasswordChk" name="newPasswordChk" required>
 			</div>
 			<div class="form-group d-flex align-items-center">
-                <button type="button" onclick="goBack()" class="btn btn-secondary">취소</button>
-                <button type="submit" class="btn btn-primary">변경</button>
-            </div>
+				<button type="button" onclick="goBack()" class="btn btn-secondary">취소</button>
+				<button type="submit" class="btn btn-primary">변경</button>
+			</div>
 		</form>
 	</div>
+	
+	
+	<!-- Bootstrap JS 추가 -->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	
 	<script>
 		function goBack() {
 			window.history.back();
 		}
+
+		$(document).ready(function () {
+			// 폼 제출 시 비밀번호 일치 여부 및 유효성 확인
+			$('form').submit(function (event) {
+				var newPassword = $('#newPassword').val();
+				var newPasswordChk = $('#newPasswordChk').val();
+
+				// 비밀번호 유효성 검사 규칙 정의
+				var passwordReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+
+				if (newPassword !== newPasswordChk) {
+					event.preventDefault(); // 폼 제출 방지
+					alert("변경할 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+				} else if (!passwordReg.test(newPassword)) {
+					event.preventDefault(); // 폼 제출 방지
+					alert("비밀번호는 영문자, 숫자, 특수문자를 포함한 8~16자리여야 합니다.");
+				}
+			});
+		});
+
 	</script>
-	<!-- Bootstrap JS 추가 -->
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	
 </body>
 
 </html>
