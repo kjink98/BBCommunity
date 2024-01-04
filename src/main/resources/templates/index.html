@@ -49,7 +49,7 @@
 						<td>
 							<a th:href="@{/post/detail/{id}(id=${post.postId})}" th:text="${post.title}"></a>
 						</td>
-						<td th:text="${post.user.name}"></td>
+						<td th:text="${post.user.nickname}"></td>
 						<td th:text="${#temporals.format(post.postRegdate, 'yyyy-MM-dd')}"></td>
 						<td th:text="${post.postViews}"></td>
 					</tr>

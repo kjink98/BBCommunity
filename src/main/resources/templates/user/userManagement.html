@@ -42,13 +42,6 @@
 							th:data-email="${user.email}" onclick="openModal(this.getAttribute('data-email'))">수정</a>
 						<button type="button" class="btn btn-danger" th:data-user-id="${user.id}"
 							onclick="openDeleteModal(this.getAttribute('data-user-id'))">탈퇴</button>
-
-						<!--
-						<form th:action="@{/user/deleteUser}" method="post">
-							<input type="hidden" name="userId" th:value="${user.id}">
-							<input type="submit" value="탈퇴" class="btn btn-danger">
-						</form>
-						<-->
 					</td>
 				</tr>
 			</tbody>
