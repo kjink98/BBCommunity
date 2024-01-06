@@ -37,17 +37,16 @@ public class OAuthAttributes {
         this.id = id; // ID 초기화
 	}
 
-	// 네이버 카카오 구글마다 지원하는 API Attribute들이 다름. registrationId로 해당하는 API 메서드를 호출하는 방식으로
-	// 하였음.
-	// 일단 구글만
+	// 네이버 카카오 구글마다 지원하는 API Attribute들이 다름. 
+	// registrationId로 해당하는 API 메서드를 호출하는 방식으로 하였음.
 	// OAuth2User에서 반환하는 사용자 정보는 Map 형태이므로 값 하나하나를 변환
 	
 	/**
 	 * OAuth2User에서 반환하는 사용자 정보는 Map 형태이므로 값 하나하나를 변환하는 메소드입니다.
-	 * 현재 구글에 대한 메소드만 구현되어 있습니다.
 	 * 네이버 카카오 구글마다 지원하는 API Attribute들이 다름
 	 */
-	public static OAuthAttributes of(String registrationId, String userNameAttributeName,
+	public static OAuthAttributes of(String registrationId, 
+			String userNameAttributeName,
 			Map<String, Object> attributes) {
 		if("naver".equals(registrationId)) {
             return ofNaver("id", attributes); // 네이버 속성 매핑

@@ -12,7 +12,12 @@ import com.bbcommunity.entity.Comment;
 import com.bbcommunity.entity.Posts;
 import com.bbcommunity.entity.User;
 import com.bbcommunity.repository.CommentRepository;
-
+/*
+* 댓글 서비스를 제공하는 클래스입니다.
+* 댓글 관련 비즈니스 로직을 처리하며, Repository를 통해 데이터베이스와의 연동을 담당합니다.
+* 댓글을 저장, 조회, 삭제하는 메소드를 제공합니다.
+* @Service 어노테이션을 이용하여 이 클래스가 서비스 레이어의 구성요소임을 나타냅니다.
+*/
 @Service
 public class CommentService {
 	private final CommentRepository commentRepository;
@@ -23,8 +28,7 @@ public class CommentService {
 		this.commentRepository = commentRepository;
 		this.postService = postService;
 	}
-
-	// 댓글 저장 메서드
+	// 댓글을 생성하고 저장하는 메소드입니다.
 	public Comment saveComment(User user, Long postId, String commentContent) {
 		Optional<Posts> post = postService.findByPostId(postId);
 		if (post.isPresent()) {
@@ -35,27 +39,22 @@ public class CommentService {
 			comment.setCommentRegdate(LocalDateTime.now());
 			return commentRepository.save(comment);
 		} else {
-			// 처리할 게시물이 없을 때 적절한 예외 처리
-			return null; // 혹은 다른 방법으로 처리
+			return null; 
 		}
 	}
 
-	// 특정 게시물의 모든 댓글 조회 메서드
 	public List<Comment> getCommentsByPost(Posts post) {
 		return commentRepository.findByPost(post);
 	}
 
-	// 특정 사용자가 작성한 모든 댓글 조회 메서드
 	public List<Comment> getCommentsByUser(User user) {
 		return commentRepository.findByUser(user);
 	}
 
-	// 댓글 ID로 댓글 조회 메서드
 	public Optional<Comment> getCommentById(Long commentId) {
 		return commentRepository.findByCommentId(commentId);
 	}
 
-	// 댓글 삭제 메서드
 	@Transactional
 	public void deleteComment(Long commentId, Long postId) {
 		commentRepository.deleteByCommentId(commentId, postId);

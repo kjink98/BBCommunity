@@ -20,7 +20,9 @@ import com.bbcommunity.dto.ChangePasswordRequestDto;
 import com.bbcommunity.entity.User;
 import com.bbcommunity.repository.UserRepository;
 import com.bbcommunity.role.Role;
-
+/*
+ * 사용자 관련 기능을 제공하는 서비스 클래스
+ */
 @Service
 public class UserService {
 	private final UserRepository userRepository;
@@ -31,11 +33,12 @@ public class UserService {
 		this.userRepository = repository;
 		this.passwordEncoder = passwordEncoder;
 	}
-
+	// 사용자 ID로 사용자를 찾는 메소드
 	public Optional<User> findByUserId(Long userId) {
 		return userRepository.findById(userId);
 	}
 
+	// 현재 로그인한 회원을 반환하는 메소드
 	public User getCurrentLoggedInMember() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		// Spring Security의 SecurityContextHolder를 사용하여 현재 로그인 중인 사용자의 Principal을 가져옴
@@ -57,7 +60,7 @@ public class UserService {
 			return null;
 		}
 	}
-
+	// 사용자 이메일을 추출하는 메소드
 	private String extractUserEmail(Object principal) {
 		try {
 			if (principal instanceof OAuth2User) {
@@ -83,7 +86,8 @@ public class UserService {
 		}
 		return null;
 	}
-
+	
+	// 비밀번호 변경 메소드
 	@Transactional
 	public void changePassword(ChangePasswordRequestDto requestDto) {
 		// 로그인중인지 확인
@@ -108,6 +112,7 @@ public class UserService {
 		userRepository.updateUserPassword(user.getId(), passwordEncoder.encode(requestDto.getNewPassword()));
 	}
 
+	// 사용자 정보 변경 메소드
 	public void changeInfo(ChangeInfoRequestDto requestDto) {
 		// 로그인중인지 확인
 		User user = getCurrentLoggedInMember();
@@ -127,6 +132,7 @@ public class UserService {
 		return userRepository.resignUser(email);
 	}
 	
+	// 사용자 삭제 메소드
 	public int deleteUser(Long userId) {
 		User user = userRepository.findById(userId).orElse(null);
 
@@ -140,6 +146,7 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
+	// 사용자 역할을 변경하는 메소드
 	@Transactional
 	public void updateRoles(String email, Role role) {
 		userRepository.updateRoles(email, role);

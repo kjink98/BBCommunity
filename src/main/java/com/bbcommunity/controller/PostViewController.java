@@ -27,7 +27,9 @@ import com.bbcommunity.service.BoardService;
 import com.bbcommunity.service.CommentService;
 import com.bbcommunity.service.PostService;
 import com.bbcommunity.service.UserService;
-
+/*
+ * PostViewController 클래스는 게시글 관련 요청을 처리합니다.
+ */
 @Controller
 @RequestMapping("/post")
 public class PostViewController {
@@ -38,13 +40,16 @@ public class PostViewController {
 	@Autowired
 	private UserService userService;
 
-	private final CommentService commentService; // commentService 필드 추가
+	private final CommentService commentService;
 
 	@Autowired
 	public PostViewController(CommentService commentService) {
 		this.commentService = commentService;
 	}
-
+	
+	/*
+	 * 모든 게시물 가져오기
+	 */
 	@GetMapping("/all")
 	public String allPosts(Model model, @RequestParam(defaultValue = "0") int page) {
 		Pageable pageable = PageRequest.of(page, 10, Sort.by("postRegdate").descending());
@@ -57,7 +62,10 @@ public class PostViewController {
 
 		return "post/allPostsView";
 	}
-
+	
+	/*
+	 * 자유 게시판의 게시물 가져오기
+	 */
 	@GetMapping("/free")
 	public String freeBoard(Model model, @RequestParam(defaultValue = "0") int page) {
 		Board board = boardService.getBoardById((long) 1);
@@ -71,7 +79,10 @@ public class PostViewController {
 
 		return "post/freeBoardView";
 	}
-
+	
+	/*
+	 * 공지사항 게시판의 게시물 가져오기
+	 */
 	@GetMapping("/notice")
 	public String noticeBoard(Model model, @RequestParam(defaultValue = "0") int page) {
 		User loggedInUser = userService.getCurrentLoggedInMember();
@@ -91,19 +102,27 @@ public class PostViewController {
 		return "post/noticeBoardView";
 	}
 
+	/*
+	 * 자유 게시판에 글 작성 폼 보기
+	 */
 	@GetMapping("/write/free")
 	public String writeFreePost() {
 		return "post/writeFreePost";
 	}
 
+	/*
+	 * 곻지사항 게시판에 글 작성 폼 보기
+	 */
 	@GetMapping("/write/notice")
 	public String writeNoticePost(Model model) {
 		return "post/writeNoticePost";
 	}
 
+	/*
+	 * 자유 게시판에 글 저장하기
+	 */
 	@PostMapping("/write/free")
 	public String saveFreePost(@ModelAttribute PostForm postForm) {
-		// 자유 게시판 글 저장 로직
 		User user = userService.getCurrentLoggedInMember();
 		postForm.setUser(user);
 		postForm.setBoard(boardService.getBoardById(1L)); // 자유 게시판 ID로 설정
@@ -111,9 +130,11 @@ public class PostViewController {
 		return "redirect:/post/free";
 	}
 
+	/*
+	 * 공지사항 게시판에 글 저장하기
+	 */
 	@PostMapping("/write/notice")
 	public String saveNoticePost(@ModelAttribute PostForm postForm, Model model) {
-		// 공지사항 게시판 글 저장 로직
 		User loggedInUser = userService.getCurrentLoggedInMember();
 		// 로그인한 사용자가 관리자인지 확인
 	    if (loggedInUser.getRole() != Role.ADMIN) {
@@ -126,6 +147,9 @@ public class PostViewController {
 		return "redirect:/post/notice";
 	}
 
+	/*
+	 * 게시물 상세 정보 보기
+	 */
 	@GetMapping("/detail/{id}")
 	public String postDetail(@PathVariable Long id, Model model) {
 		Optional<Posts> post = postService.findByPostId(id);
@@ -147,6 +171,9 @@ public class PostViewController {
 		}
 	}
 
+	/*
+	 * 게시물 수정 폼 보기
+	 */
 	@GetMapping("/edit/{id}")
 	public String editPostForm(@PathVariable Long id, Model model) {
 		Optional<Posts> post = postService.findByPostId(id);
@@ -160,7 +187,10 @@ public class PostViewController {
 			return "error/editErrorView";
 		}
 	}
-
+	
+	/*
+	 * 게시물 수정하기
+	 */
 	@PostMapping("/edit/{id}")
 	public String updatePost(@PathVariable Long id, @ModelAttribute PostForm postForm, Model model) {
 		Optional<Posts> updatedPostOptional = postService.update(id, postForm);
@@ -176,7 +206,10 @@ public class PostViewController {
 			return "error/editErrorView";
 		}
 	}
-
+	
+	/*
+	 * 게시물 삭제하기
+	 */
 	@PostMapping("/delete/{id}")
 	public String deletePost(@PathVariable Long id) {
 		User loggedInUser = userService.getCurrentLoggedInMember();
@@ -192,6 +225,10 @@ public class PostViewController {
 		}
 	}
 
+	/*
+	 * 게시글 검색하기
+	 * 특정 키워드를 포함하는 게시글을 검색하여 결과를 템플릿에 전달합니다.
+	 */
 	@GetMapping("/search")
 	public String searchPostsByTitle(@RequestParam("keyword") String keyword, Model model) {
 		Page<Posts> searchResults = postService.searchPostsByTitle(keyword, PageRequest.of(0, 10)); // 예시로 페이지는 첫 번째

@@ -10,7 +10,11 @@ import com.bbcommunity.repository.UserRepository;
 import com.bbcommunity.role.Role;
 
 import jakarta.transaction.Transactional;
-
+/*
+* 사용자 등록 관련 서비스 클래스입니다.
+* 사용자 등록 기능을 제공하며, 중복 회원 검사 기능을 포함합니다.
+* @Service 어노테이션을 통해 스프링의 빈으로 등록되며, PasswordEncoder와 UserRepository를 주입 받아 사용합니다.
+*/
 @Service
 public class RegisterUserService {
 	private final PasswordEncoder passwordEncoder;

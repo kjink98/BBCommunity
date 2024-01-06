@@ -16,6 +16,9 @@ import com.bbcommunity.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
+/*
+ * 사용자와 관련된 요청을 처리
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -23,8 +26,9 @@ public class UserApiController {
 	private final UserService userService;
 	
 	/*
-	 * 비밀번호 변경 요청을 처리하는 API UserService의 changePassword 메서드를 호출하여 비밀번호 변경 로직을 수행
-	 */
+     * 비밀번호 변경 요청을 처리하는 API
+     * UserService의 changePassword 메서드를 호출하여 비밀번호 변경 로직을 수행합니다.
+     */
 	@PostMapping("/changePw")
 	public ResponseEntity<String> changePassword(ChangePasswordRequestDto requestDto) {
 		try {
@@ -37,8 +41,9 @@ public class UserApiController {
 	}
 	
 	/*
-	 * 내 정보 수정
-	 */
+     * 내 정보 수정 API
+     * UserService의 changeInfo 메서드를 호출하여 내 정보 변경 로직을 수행합니다.
+     */
 	@PostMapping("/changeInfo")
 	public ResponseEntity<String> changeInfo(ChangeInfoRequestDto requestDto) {
 		try {
@@ -50,8 +55,9 @@ public class UserApiController {
 	}
 
 	/*
-	 * 회원 탈퇴 요청을 처리하는 API
-	 */
+     * 회원 탈퇴 요청을 처리하는 API
+     * 사용자의 인증을 확인하고, UserService의 resignUser 메서드를 호출하여 회원 탈퇴를 수행합니다.
+     */
 	@PostMapping("/resign")
 	public ResponseEntity<String> delete(@RequestParam String password, HttpServletRequest request) {
 		// 현재 인증된 사용자를 가져옴
@@ -73,6 +79,10 @@ public class UserApiController {
 		}
 	}
 	
+	/*
+     * 사용자 삭제 API
+     * UserService의 deleteUser 메서드를 호출하여 사용자를 삭제합니다.
+     */
 	@PostMapping("/deleteUser")
 	public ResponseEntity<String> deleteUser(@RequestParam Long userId, HttpServletRequest request) {
 		// 현재 인증된 사용자를 가져옴

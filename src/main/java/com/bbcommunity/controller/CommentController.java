@@ -14,20 +14,27 @@ import com.bbcommunity.entity.Posts;
 import com.bbcommunity.entity.User;
 import com.bbcommunity.service.CommentService;
 import com.bbcommunity.service.UserService;
-
+/*
+ * CommentController 클래스는 댓글과 관련된 요청을 처리합니다.
+ */
 @Controller
 @RequestMapping("/comments")
 public class CommentController {
 	private final CommentService commentService;
 	@Autowired
 	private UserService userService;
-
+	/*
+	 * CommentService를 주입받아 사용합니다.
+	 */
 	@Autowired
 	public CommentController(CommentService commentService) {
 		this.commentService = commentService;
 	}
 
-	// 댓글 작성 폼을 표시하는 메서드
+	/*
+	 * 댓글 작성 폼을 표시하는 메서드입니다.
+	 * @PostMapping 어노테이션을 사용하여 "/add" 경로로 들어오는 POST 요청을 처리합니다.
+	 */
 	@PostMapping("/add")
 	public String addComment(@ModelAttribute("newComment") Comment newComment, @RequestParam("postId") Long postId) {
 		// postId 값을 받아와서 Comment 객체에 설정
@@ -54,7 +61,10 @@ public class CommentController {
 
 	}
 
-	// 댓글 삭제 처리하는 메서드
+	/*
+	 * 댓글 삭제 처리하는 메서드입니다.
+	 * @PostMapping 어노테이션을 사용하여 "/delete" 경로로 들어오는 POST 요청을 처리합니다.
+	 */
 	@PostMapping("/delete")
 	public String deleteComment(@RequestParam("commentId") Long commentId, @RequestParam("postId") Long postId) {
 		User currentUser = userService.getCurrentLoggedInMember();

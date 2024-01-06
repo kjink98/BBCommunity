@@ -17,25 +17,34 @@ import com.bbcommunity.role.Role;
 import com.bbcommunity.service.UserService;
 
 import lombok.RequiredArgsConstructor;
-
+/*
+* 사용자 관련 기능을 제공하는 컨트롤러입니다.
+* 각 사용자의 등록, 로그인, 정보 조회 및 변경, 계정 삭제, 사용자 관리(관리자 전용) 기능을 제공합니다.
+*/
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserViewController {
 	private final UserService userService;
-	
+	/*
+	* 사용자 등록 페이지로 이동합니다.
+	*/
 	@GetMapping("/register")
 	public String register(Model model) {
 		model.addAttribute("user", new UserRegisterDto());
 		return "user/register";
 	}
-	
+	/*
+	* 로그인 페이지로 이동합니다.
+	*/
 	@GetMapping("/login")
 	public String login() {
 	    return "user/login";
 	}
 	
-	
+	/*
+	* 현재 로그인 중인 사용자의 정보를 조회합니다.
+	*/
 	@GetMapping("/myInfo")
 	public String myInfo(Model model) {
         // 현재 로그인 중인 사용자의 Member 엔티티를 가져옴
@@ -58,12 +67,16 @@ public class UserViewController {
 
         return "user/myInfo";
     }
-	
+	/*
+	* 비밀번호 변경 페이지로 이동합니다.
+	*/
 	@GetMapping("/changePw")
 	public String changePw() {
 	    return "user/changePw";
 	}
-	
+	/*
+	* 사용자 정보 변경 페이지로 이동합니다.
+	*/
 	@GetMapping("/changeInfo")
 	public String changeInfo(Model model) {
 		// 현재 로그인 중인 사용자의 Member 엔티티를 가져옴
@@ -82,19 +95,27 @@ public class UserViewController {
         }
 	    return "user/changeInfo";
 	}
-	
+	/*
+	* 계정 삭제 페이지로 이동합니다.
+	*/
 	@GetMapping("/resign")
 	public String resignPage() {
 	    return "user/resign";
 	}
-	
+	/*
+	* 모든 사용자의 정보를 조회하는 사용자 관리 페이지로 이동합니다.
+	* 이 기능은 관리자만 이용 가능합니다.
+	*/
 	@GetMapping("/userManagement")
 	public String userManagement(Model model) {
 		List<User> users = userService.getAllUsers();
 		model.addAttribute("users", users);
 		return "user/userManagement";
 	}
-	
+	/*
+	* 사용자의 역할을 업데이트하는 기능입니다.
+	* 이 기능은 관리자만 이용 가능합니다.
+	*/
 	@PostMapping("/userManagement")
 	public ResponseEntity<?> updateRoles(@RequestBody UserRolesRequest request) {
 	    userService.updateRoles(request.getEmail(), request.getRole());

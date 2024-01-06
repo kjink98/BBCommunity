@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 
 @Data // Getter, Setter 자동으로 만듬, 추가적으로 RequiredArgsConstructor도
 @NoArgsConstructor  // 인자 없는 생성자 만듬
-@Entity // DB 테이블과 1:1 매칭
+@Entity 
 @DynamicInsert // null 제외 쿼리 실행, 쿼리문 성능 향상
 @Table(name = "member")
 public class User {
@@ -47,7 +47,7 @@ public class User {
 	@Column(nullable=false, name = "user_nickname")
 	private String nickname;
 
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.STRING) // 열거형을 문자열로 저장합니다.
 	@Column(nullable=false)
 	private Role role;
 
@@ -58,6 +58,7 @@ public class User {
 	@Builder
 	public User(Long id, String email, String password, String name, String gender, String nickname, Role role,
 			LocalDateTime regdate) {
+		// 사용자의 ID, 이메일, 비밀번호, 이름, 성별, 별명, 권한, 등록 날짜를 인자로 받는 생성자입니다.
 		this.id = id;
 		this.email = email;
 		this.password = password;

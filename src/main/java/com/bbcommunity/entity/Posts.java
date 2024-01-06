@@ -14,7 +14,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+/*
+* 게시글 정보를 표현하는 엔티티 클래스입니다.
+* 게시글 ID, 게시판, 작성자, 제목, 내용, 등록 날짜, 조회수를 필드로 가지며, 'POST' 테이블에 매핑됩니다.
+*/
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,7 +31,7 @@ public class Posts {
 	
 	@ManyToOne
 	@JoinColumn(name = "BOARD_ID")
-    private Board board;
+    private Board board; // 게시글이 속한 게시판
 	
 	@ManyToOne
 	@JoinColumn(name = "USER_ID")
@@ -46,8 +49,9 @@ public class Posts {
     @Column(name = "POST_VIEWS", columnDefinition = "integer default 0", nullable = false)
     private int postViews;
     
-    @Builder
+    @Builder // 빌더 패턴 클래스를 자동으로 생성합니다.
     public Posts(String title, String content, User user, Board board){
+    	// 게시글의 제목, 내용, 작성자, 게시판을 인자로 받는 생성자입니다.
         this.title = title;
         this.content = content;
         this.user = user;
